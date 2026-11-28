@@ -3,6 +3,9 @@ import ZeroParadox.Multihomed.TH3Die
 import ZeroParadox.Multihomed.LimitMotion
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Topology.EMetricSpace.BoundedVariation
 import Mathlib.Tactic
 
 /-!
@@ -814,6 +817,168 @@ theorem bend_zeta_sq_conditions :
       _ = bendZeta ^ 3 := by ring
       _ = 1 := h3
 
+/-! ## § VII. Arc against chord: the unit circle, and the twist's step -/
+
+section ArcChord
+
+open Set
+
+/-- `Statement:` the chord of the unit circle across angle `θ`, `2 sin (θ/2)`. -/
+noncomputable def chord (θ : ℝ) : ℝ := 2 * Real.sin (θ / 2)
+
+/-- `Statement:` the sum of `n` equal chords across total angle `θ`. -/
+noncomputable def chordSum (n : ℕ) (θ : ℝ) : ℝ := n * chord (θ / n)
+
+/-- `Statement:` the unit circle parametrised by angle, `t ↦ exp (i t)`. -/
+noncomputable def unitCirc (t : ℝ) : ℂ := Complex.exp (Complex.I * t)
+
+/-- `Statement:` `dist (unitCirc a) (unitCirc b) = ‖2 sin ((a - b)/2)‖`. -/
+theorem dist_unitCirc (a b : ℝ) :
+    dist (unitCirc a) (unitCirc b) = ‖2 * Real.sin ((a - b) / 2)‖ := by
+  rw [← Complex.norm_exp_I_mul_ofReal_sub_one, dist_eq_norm]
+  have : unitCirc a - unitCirc b
+      = unitCirc b * (Complex.exp (Complex.I * ((a - b : ℝ) : ℂ)) - 1) := by
+    unfold unitCirc
+    rw [mul_sub, ← Complex.exp_add, mul_one]; push_cast; ring_nf
+  rw [this, norm_mul]
+  have h1 : ‖unitCirc b‖ = 1 := by
+    unfold unitCirc; rw [Complex.norm_exp]; simp
+  rw [h1, one_mul]
+
+/-- `Statement:` for `0 ≤ θ ≤ 2π`, the chord is the distance between the arc's endpoints. -/
+theorem chord_eq_dist {θ : ℝ} (h0 : 0 ≤ θ) (h1 : θ ≤ 2 * Real.pi) :
+    dist (unitCirc θ) (unitCirc 0) = chord θ := by
+  rw [dist_unitCirc, sub_zero, Real.norm_eq_abs, chord, abs_of_nonneg]
+  have := Real.sin_nonneg_of_nonneg_of_le_pi (x := θ / 2) (by linarith) (by linarith)
+  linarith
+
+/-- `Statement:` `chord θ < θ` for every `θ > 0` (Mathlib's `Real.sin_lt`). -/
+theorem chord_lt {θ : ℝ} (h : 0 < θ) : chord θ < θ := by
+  unfold chord
+  have := Real.sin_lt (half_pos h)
+  linarith
+
+/-- `Statement:` for `n ≥ 1` and `θ > 0`, `chordSum n θ < θ`: every finite refinement falls short. -/
+theorem chordSum_lt {n : ℕ} (hn : 1 ≤ n) {θ : ℝ} (h : 0 < θ) : chordSum n θ < θ := by
+  unfold chordSum
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  have := chord_lt (div_pos h hn')
+  calc (n : ℝ) * chord (θ / n) < n * (θ / n) := mul_lt_mul_of_pos_left this hn'
+    _ = θ := by field_simp
+
+/-- `Statement:` for `n ≥ 1` and `0 ≤ θ ≤ 4πn`, doubling the partition does not shorten the chord sum. -/
+theorem chordSum_le_double {n : ℕ} (hn : 1 ≤ n) {θ : ℝ} (h0 : 0 ≤ θ)
+    (hπ : θ ≤ 4 * Real.pi * n) : chordSum n θ ≤ chordSum (2 * n) θ := by
+  unfold chordSum chord
+  have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+  set a : ℝ := θ / (4 * n) with ha
+  have e1 : θ / (n : ℝ) / 2 = 2 * a := by rw [ha]; field_simp; ring
+  have e2 : θ / ((2 * n : ℕ) : ℝ) / 2 = a := by rw [ha]; push_cast; field_simp; ring
+  rw [e1, e2, Real.sin_two_mul]
+  have hs : 0 ≤ Real.sin a := Real.sin_nonneg_of_nonneg_of_le_pi (by positivity)
+    (by rw [ha, div_le_iff₀ (by positivity)]; linarith)
+  have hc := Real.cos_le_one a
+  push_cast
+  nlinarith [mul_le_mul_of_nonneg_left hc hs]
+
+/-- `Statement:` for `θ > 0`, `chordSum n θ → θ` as `n → ∞`. -/
+theorem chordSum_tendsto {θ : ℝ} (h : 0 < θ) :
+    Tendsto (fun n : ℕ => chordSum n θ) atTop (𝓝 θ) := by
+  have hlow : Tendsto (fun n : ℕ => θ - θ ^ 3 / 24 * ((n : ℝ)⁻¹) ^ 2) atTop (𝓝 θ) := by
+    have := ((tendsto_inv_atTop_nhds_zero_nat (𝕜 := ℝ)).pow 2).const_mul (θ ^ 3 / 24)
+    simpa using (tendsto_const_nhds (x := θ)).sub this
+  refine tendsto_of_tendsto_of_tendsto_of_le_of_le' hlow tendsto_const_nhds ?_ ?_
+  · filter_upwards [eventually_ge_atTop 1] with n hn
+    have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+    unfold chordSum chord
+    have hx : 0 < θ / n / 2 := by positivity
+    have := Real.sin_gt_sub_cube hx
+    have e1 : (n : ℝ) * (2 * (θ / n / 2 - (θ / n / 2) ^ 3 / 6))
+        = θ - θ ^ 3 / 24 * ((n : ℝ)⁻¹) ^ 2 := by field_simp; ring
+    rw [← e1]
+    exact mul_le_mul_of_nonneg_left (by linarith : 2 * (θ / n / 2 - (θ / n / 2) ^ 3 / 6)
+      ≤ 2 * Real.sin (θ / n / 2)) hn'.le
+  · filter_upwards [eventually_ge_atTop 1] with n hn
+    exact (chordSum_lt hn h).le
+
+/-- `Statement:` `unitCirc` is 1-Lipschitz. -/
+theorem unitCirc_lipschitz : LipschitzWith 1 unitCirc := by
+  refine LipschitzWith.of_dist_le_mul fun a b => ?_
+  rw [dist_unitCirc, NNReal.coe_one, one_mul, Real.dist_eq, Real.norm_eq_abs, abs_mul, abs_two]
+  have := Real.abs_sin_le_abs (x := (a - b) / 2)
+  rw [abs_div, abs_two] at this
+  linarith
+
+/-- `Statement:` for `θ > 0`, the arc length of the unit circle over `[0, θ]`, Mathlib's
+    `eVariationOn` (the supremum of chord sums over partitions), is `θ`. -/
+theorem arc_unitCirc {θ : ℝ} (h : 0 < θ) :
+    eVariationOn unitCirc (Icc 0 θ) = ENNReal.ofReal θ := by
+  apply _root_.le_antisymm
+  · have := (unitCirc_lipschitz.lipschitzOnWith (s := univ)).comp_eVariationOn_le
+      (g := id) (s := Icc 0 θ) (mapsTo_univ _ _)
+    simpa using this
+  · have hev : ∀ᶠ n : ℕ in atTop,
+        ENNReal.ofReal (chordSum n θ) ≤ eVariationOn unitCirc (Icc 0 θ) := by
+      obtain ⟨M, hM⟩ := exists_nat_gt (θ / (2 * Real.pi))
+      filter_upwards [eventually_ge_atTop (max M 1)] with n hn
+      have hn1 : 1 ≤ n := le_of_max_le_right hn
+      have hn' : (0 : ℝ) < n := by exact_mod_cast hn1
+      have hMn : (M : ℝ) ≤ n := by exact_mod_cast le_of_max_le_left hn
+      have hθn : θ / n ≤ 2 * Real.pi := by
+        rw [div_le_iff₀ hn']
+        have := (div_lt_iff₀ (by positivity : (0 : ℝ) < 2 * Real.pi)).1 hM
+        nlinarith [Real.pi_pos]
+      let u : ℕ → ℝ := fun i => i * (θ / n)
+      have hu : MonotoneOn u (Iic n) := fun i _ j _ hij => by
+        simp only [u]; gcongr
+      have us : ∀ i ≤ n, u i ∈ Icc 0 θ := fun i hi => by
+        refine ⟨by positivity, ?_⟩
+        simp only [u]
+        calc (i : ℝ) * (θ / n) ≤ n * (θ / n) := by gcongr
+          _ = θ := by field_simp
+      have hsum := eVariationOn.sum_le_of_monotoneOn_Iic (f := unitCirc) hu us
+      have hterm : ∀ i, edist (unitCirc (u (i + 1))) (unitCirc (u i))
+          = ENNReal.ofReal (chord (θ / n)) := by
+        intro i
+        rw [edist_dist, dist_unitCirc]
+        have : u (i + 1) - u i = θ / n := by simp only [u]; push_cast; ring
+        rw [this, Real.norm_eq_abs, abs_of_nonneg, chord]
+        have := Real.sin_nonneg_of_nonneg_of_le_pi (x := θ / n / 2) (by positivity) (by linarith)
+        linarith
+      simp_rw [hterm, Finset.sum_const, Finset.card_range, nsmul_eq_mul] at hsum
+      unfold chordSum
+      rw [ENNReal.ofReal_mul (Nat.cast_nonneg n), ENNReal.ofReal_natCast]
+      exact hsum
+    exact le_of_tendsto ((ENNReal.continuous_ofReal.tendsto θ).comp (chordSum_tendsto h)) hev
+
+/-- `Statement:` the distance from `z` to `bendTwist α z` is `‖z‖ · ‖2 sin (α log ‖z‖ / 2)‖`. -/
+theorem dist_bendTwist (α : ℝ) (z : ℂ) :
+    dist z (bendTwist α z) = ‖z‖ * ‖2 * Real.sin ((α * Real.log ‖z‖) / 2)‖ := by
+  unfold bendTwist
+  rw [dist_eq_norm]
+  have : z - z * Complex.exp (((α * Real.log ‖z‖ : ℝ) : ℂ) * Complex.I)
+      = -z * (Complex.exp (Complex.I * ((α * Real.log ‖z‖ : ℝ) : ℂ)) - 1) := by ring_nf
+  rw [this, norm_mul, norm_neg, Complex.norm_exp_I_mul_ofReal_sub_one]
+
+/-- `Statement:` for `z ≠ 0` and twist angle `α log ‖z‖ ≠ 0`, the chord from `z` to `bendTwist α z` is
+    shorter than `‖z‖ · |α log ‖z‖|`, the arc of the circle of radius `‖z‖` at that angle. Arc as a
+    LENGTH (`eVariationOn`) is proved only on the unit circle (`arc_unitCirc`). -/
+theorem bendTwist_chord_lt_arc {α : ℝ} {z : ℂ} (hz : z ≠ 0)
+    (hθ : α * Real.log ‖z‖ ≠ 0) :
+    dist z (bendTwist α z) < ‖z‖ * |α * Real.log ‖z‖| := by
+  rw [dist_bendTwist]
+  have hz' : 0 < ‖z‖ := norm_pos_iff.2 hz
+  apply mul_lt_mul_of_pos_left _ hz'
+  rw [Real.norm_eq_abs, abs_mul, abs_two]
+  have := Real.abs_sin_lt_abs (x := α * Real.log ‖z‖ / 2) (div_ne_zero hθ two_ne_zero)
+  rw [abs_div, abs_two] at this
+  linarith
+
+-- Statement: CONTROL, zero twist moves no point: chord 0.
+example (z : ℂ) : dist z (bendTwist 0 z) = 0 := by rw [dist_bendTwist]; simp
+
+end ArcChord
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -881,4 +1046,17 @@ open ZeroParadox
 #print axioms bendFive_conj
 #print axioms bendFiveIso
 #print axioms bend_zeta_sq_conditions
+#print axioms chord
+#print axioms chordSum
+#print axioms unitCirc
+#print axioms dist_unitCirc
+#print axioms chord_eq_dist
+#print axioms chord_lt
+#print axioms chordSum_lt
+#print axioms chordSum_le_double
+#print axioms chordSum_tendsto
+#print axioms unitCirc_lipschitz
+#print axioms arc_unitCirc
+#print axioms dist_bendTwist
+#print axioms bendTwist_chord_lt_arc
 end PurityCheck

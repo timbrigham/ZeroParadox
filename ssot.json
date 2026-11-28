@@ -477487,7 +477487,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 5114,
+        "declarations": 5181,
         "files": 249
       },
       "entries": [
@@ -480572,6 +480572,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "049d1813-6ff5-4755-b2b4-5abefb568c76",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.volume_n2Real",
+            "short": "volume_n2Real"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.volume_n2Real",
+            "short": "volume_n2Real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "04adaf70-fef6-46ff-8bab-25f10636d2a8",
           "new": {
             "file": "ZeroParadox/Category/DiagonalWitness.lean",
@@ -481807,6 +481844,43 @@
             ]
           },
           "reason": "Land PoleWithinEnsemble and TowerTape: ⊥ of ℕ → Bool null yet in the support of trials p hp (iff p < 1) and in the closure of random firing tapes; local floors as subtape poles; a local tower as one tape; limit and value forms (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0628a149-ff4f-4549-a3ae-a1bdb9148dd0",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dist_bendTwist",
+            "short": "dist_bendTwist"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dist_bendTwist",
+            "short": "dist_bendTwist",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -488354,6 +488428,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0e0993d2-faa2-47db-a173-8381053996be",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount_ladder_scale",
+            "short": "gapCount_ladder_scale"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount_ladder_scale",
+            "short": "gapCount_ladder_scale",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0e23b397-9e56-41a6-912f-0db6463b4d48",
           "new": {
             "file": "ZeroParadox/Multihomed/TH3Die.lean",
@@ -490378,6 +490489,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "10a594e1-7860-4296-a2cb-39aecf5138c3",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.volume_preCantorSet_le",
+            "short": "volume_preCantorSet_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.volume_preCantorSet_le",
+            "short": "volume_preCantorSet_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "10b0dccb-5d32-4cf1-9c99-9079128ca244",
           "new": {
             "file": "ZeroParadox/Settheory/APG.lean",
@@ -491935,6 +492083,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "12dd7165-fb6c-4c0b-9c46-1f4d3b6ca0bc",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cxQ2_eq_gapCount",
+            "short": "cxQ2_eq_gapCount"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cxQ2_eq_gapCount",
+            "short": "cxQ2_eq_gapCount",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -497564,6 +497749,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/MaxEntropy.lean (experimental, Tim ruling 154): fair coin maximizes entropy, missing information zero iff fair, chain to mlRandom_and_snap_ae under binEntropy p = log 2, Kraft in measure form, almost every fair tape incompressible for any prefix-free decoder. The occurrence commitment is reduced, not discharged.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1ad30a49-7d98-4555-9bb8-e076b25a935c",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_pair",
+            "short": "spanGap_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_pair",
+            "short": "spanGap_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -503253,6 +503475,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "23969593-c350-4d9c-b175-e3d0c9542954",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ediam_ball_Z2",
+            "short": "ediam_ball_Z2"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ediam_ball_Z2",
+            "short": "ediam_ball_Z2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "23987c28-be34-470e-bb69-ac09c487b3e4",
           "new": {
             "file": "ZeroParadox/Information/Dial.lean",
@@ -503510,6 +503769,43 @@
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "24313a4f-7f3a-4cb0-9b9c-a913a573b4d5",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount_ladder",
+            "short": "gapCount_ladder"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount_ladder",
+            "short": "gapCount_ladder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
           }
         },
         {
@@ -506814,6 +507110,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2842ff9e-5944-45cf-9a7f-16e8362d38bf",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.real_spanGap_zero",
+            "short": "real_spanGap_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.real_spanGap_zero",
+            "short": "real_spanGap_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -513129,6 +513462,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "305cd88c-30e0-4e79-84af-8a8b533c4012",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.material_add_spanGap",
+            "short": "material_add_spanGap"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.material_add_spanGap",
+            "short": "material_add_spanGap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3063c04d-97d4-4834-94b1-f9a0cf8c3c55",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleBridge.lean",
@@ -514260,6 +514630,43 @@
             ]
           },
           "reason": "T-H3 conjuncts as die motions, with controls and two obstructions (ZeroParadox/Multihomed/TH3Die.lean; Tim: \"Land it\", 2026-11-18)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "323cc74f-5ed5-4e0d-851d-5a2ec86195af",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Icc_diff_n2Real",
+            "short": "Icc_diff_n2Real"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Icc_diff_n2Real",
+            "short": "Icc_diff_n2Real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -520587,6 +520994,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3b454c56-7814-4794-96bc-7e56feeaf0a2",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ladder_count_eq_log",
+            "short": "ladder_count_eq_log"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ladder_count_eq_log",
+            "short": "ladder_count_eq_log",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3b4b0301-c7f0-4ae7-ab76-9f30e4504f05",
           "new": {
             "file": "ZeroParadox/Valuation/Interleave.lean",
@@ -522025,6 +522469,43 @@
             ]
           },
           "reason": "The bend: overlap condition of the TH3Die (A)-(D) obstruction, and z -> c z on OnePoint C as a limit motion against the topological classification of Mobius (linear) maps; for periodic maps (c a root of unity) the die isomorphism sees only cycle structure, irrational rotations not covered; at |c| = 1 only c ~ conj c is proved, the separating half is Rybalkina-Sergeichuk literature (ZeroParadox/Multihomed/BendDie.lean)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3d0f6adf-13c9-4461-9e7c-6d192c623773",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount_harm_two",
+            "short": "gapCount_harm_two"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount_harm_two",
+            "short": "gapCount_harm_two",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -528425,6 +528906,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "45bd2d38-6df2-400e-93c7-66323a58edc1",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2_half_pow_tendsto",
+            "short": "n2_half_pow_tendsto"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2_half_pow_tendsto",
+            "short": "n2_half_pow_tendsto",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "45d32b49-029f-487a-a1a3-d7af474f02b8",
           "new": {
             "file": "ZeroParadox/Settheory/APG.lean",
@@ -529122,6 +529640,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "46aa304e-8326-4f77-813b-588b64dc0368",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chord_eq_dist",
+            "short": "chord_eq_dist"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chord_eq_dist",
+            "short": "chord_eq_dist",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -529973,6 +530528,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "485186f6-da19-4106-b7cc-baebc94dba7e",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dist_unitCirc",
+            "short": "dist_unitCirc"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dist_unitCirc",
+            "short": "dist_unitCirc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -530909,6 +531501,43 @@
             ]
           },
           "reason": "Ruling 280 (b): tower tape wired to the snap as a family indexed by chart (TowerTapeSnap.lean). tapeIso carries towerTape [] x to a tape that fires iff x is not botEnd; pointwise every other seed gives t_snap_of_fires_once's conclusion, almost every trials-seed does; control: the tower tapes are a trials-null set (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "49347fe4-2903-4924-8feb-a467fd7abb82",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Real_eq",
+            "short": "n2Real_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Real_eq",
+            "short": "n2Real_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -532928,6 +533557,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4c2e5ff2-c2f2-4c51-a23d-895196089690",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chordSum",
+            "short": "chordSum"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chordSum",
+            "short": "chordSum",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4c2f460a-14fa-4f1a-91d5-63d93552798b",
           "new": {
             "file": "ZeroParadox/Multihomed/BendDie.lean",
@@ -534492,6 +535158,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4e7b2e78-371f-4e19-a7d3-15e30b805e74",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_eq_zero_iff",
+            "short": "spanGap_eq_zero_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_eq_zero_iff",
+            "short": "spanGap_eq_zero_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4e838c2f-9151-4ac3-96a8-d1d4a2b2a1ae",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -534896,6 +535599,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4f0d5a7e-e943-41c7-adf9-188e3dd2e263",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Gaps_above_finite",
+            "short": "n2Gaps_above_finite"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Gaps_above_finite",
+            "short": "n2Gaps_above_finite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -544778,6 +545518,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5c82c2e5-9f52-46e4-9064-e5fae8451e6a",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haar_eq_ediam_ball_Z2",
+            "short": "haar_eq_ediam_ball_Z2"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haar_eq_ediam_ball_Z2",
+            "short": "haar_eq_ediam_ball_Z2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5c8dd136-c992-4036-bdc2-70647a581d9c",
           "new": {
@@ -551665,6 +552442,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6636a885-9bb4-4f0b-ad2c-4ae71fb36c0a",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.irr_unit_spanGap_zero_not_ordConnected",
+            "short": "irr_unit_spanGap_zero_not_ordConnected"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.irr_unit_spanGap_zero_not_ordConnected",
+            "short": "irr_unit_spanGap_zero_not_ordConnected",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "66377e29-2ee6-4493-a349-8031211f80da",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -555155,6 +555969,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6af27636-a850-45f6-8e76-511447ee232c",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_Icc",
+            "short": "spanGap_Icc"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_Icc",
+            "short": "spanGap_Icc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6af976cf-1d93-40aa-aa42-c78562bda2fd",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -557554,6 +558405,43 @@
             ]
           },
           "reason": "PadicBallWave: ball integrals of every additive character of Z_p (general subgroup form), the paChar level, and continuous characters factor through paChar (2026-11-21).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6df89967-f3ab-4686-914c-4974346609d4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2_half_pow_eq_zpow",
+            "short": "n2_half_pow_eq_zpow"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2_half_pow_eq_zpow",
+            "short": "n2_half_pow_eq_zpow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -562095,6 +562983,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "749c5808-2850-4007-91e3-7b3703ec6170",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.one_mem_preCantorSet",
+            "short": "one_mem_preCantorSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.one_mem_preCantorSet",
+            "short": "one_mem_preCantorSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "74a2b30b-4ea1-43c5-885f-64939076705d",
           "new": {
@@ -563279,6 +564204,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7606bcf8-980a-4755-b5c3-6c45e619997f",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cxQ2_two_pow_eq_log",
+            "short": "cxQ2_two_pow_eq_log"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cxQ2_two_pow_eq_log",
+            "short": "cxQ2_two_pow_eq_log",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "760f514d-ae4c-434a-8e50-5c545239672a",
           "new": {
             "file": "ZeroParadox/Information/PoleWithinEnsemble.lean",
@@ -564085,6 +565047,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "779841bc-5821-493d-9b59-721d297e19b4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapLadder",
+            "short": "gapLadder"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapLadder",
+            "short": "gapLadder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -567922,6 +568921,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7c8e0336-87f6-4a93-91e6-2cf59dc77b4b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitCirc",
+            "short": "unitCirc"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unitCirc",
+            "short": "unitCirc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7ca5d92d-86e5-4063-8527-e13c617104c8",
           "new": {
             "file": "ZeroParadox/Order/DieBranches.lean",
@@ -570496,6 +571532,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "800cb603-c256-4606-a406-fe1753b5ec57",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapRemaining",
+            "short": "gapRemaining"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapRemaining",
+            "short": "gapRemaining",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8013e49f-c680-4346-b0de-0f0cd6321d0e",
           "new": {
             "file": "ZeroParadox/Valuation/Interleave.lean",
@@ -571871,6 +572944,43 @@
             "role": []
           },
           "reason": "die-pinnedlimit-1103: Tim's die role PinnedLimit (Die.lean § XXIV: role, NInf order + occupant, link, WLPO separation, WithTop control) and the ε₀ occupant (Epsilon0MinMax § III); Tim ruled 2026-11-03",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "81e4fb8c-bcd6-479c-b400-be2232b057f9",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isClosed_n2Real",
+            "short": "isClosed_n2Real"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isClosed_n2Real",
+            "short": "isClosed_n2Real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -573575,6 +574685,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8415b9af-67c6-4f9e-8557-73647bb8bc03",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ediam_cantorSet",
+            "short": "ediam_cantorSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ediam_cantorSet",
+            "short": "ediam_cantorSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -575359,6 +576506,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "86a9bcb6-f333-4a90-9926-5daff9be1055",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chordSum_lt",
+            "short": "chordSum_lt"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chordSum_lt",
+            "short": "chordSum_lt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -579873,6 +581057,43 @@
             ]
           },
           "reason": "Ruling 280 (b): tower tape wired to the snap as a family indexed by chart (TowerTapeSnap.lean). tapeIso carries towerTape [] x to a tape that fires iff x is not botEnd; pointwise every other seed gives t_snap_of_fires_once's conclusion, almost every trials-seed does; control: the tower tapes are a trials-null set (2026-11-15).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8e120957-14e3-4f62-94d7-9e29f5733b0a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitCirc_lipschitz",
+            "short": "unitCirc_lipschitz"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unitCirc_lipschitz",
+            "short": "unitCirc_lipschitz",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -588398,6 +589619,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9906c180-603c-44ad-ab2c-a5ba87615225",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tsum_volume_n2GapInt",
+            "short": "tsum_volume_n2GapInt"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tsum_volume_n2GapInt",
+            "short": "tsum_volume_n2GapInt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9915755a-16d0-4fb2-a2a7-051673027c74",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -591089,6 +592347,43 @@
             ]
           },
           "reason": "Ruling 281 (batch Q6 C, 2026-11-15): the other chart, a fading coin. fadingTrials (product of Bernoulli(q n)); with summable q the eventually-false tapes have measure one (first Borel-Cantelli); paired with the constant-coin null result as a family indexed by the coin, never a union (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9c86d861-48bb-47e7-b5a4-cd3f37907a98",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_Icc_of_spanGap_eq_zero",
+            "short": "eq_Icc_of_spanGap_eq_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_Icc_of_spanGap_eq_zero",
+            "short": "eq_Icc_of_spanGap_eq_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -597465,6 +598760,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a533de97-9581-4d7e-8603-f5d68f899cb1",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount_remaining_ladder",
+            "short": "gapCount_remaining_ladder"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount_remaining_ladder",
+            "short": "gapCount_remaining_ladder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a53ef1fe-44c7-4f27-9335-32c3cf7adbe9",
           "new": {
             "file": "ZeroParadox/State/QubitDie.lean",
@@ -597604,6 +598936,43 @@
             ]
           },
           "reason": "Probe-2 landed in PolePassage: first step at 0 of an ordered group iff not dense, and the dense-valued HahnSeries control",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a567806d-d76b-4617-8f4c-c9b44e011533",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap",
+            "short": "spanGap"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap",
+            "short": "spanGap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -597972,6 +599341,45 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a679d99f-2f65-4e80-b4f0-e7f7446c9ebe",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cxQ2_eq_gap_count",
+            "short": "cxQ2_eq_gap_count"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cxQ2_eq_gap_count",
+            "short": "cxQ2_eq_gap_count",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -602560,6 +603968,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "abd0a974-a6dc-46bc-b8fd-ba98f34e138a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dTwist_step_no_arc",
+            "short": "dTwist_step_no_arc"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dTwist_step_no_arc",
+            "short": "dTwist_step_no_arc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "abd4bad3-53ec-4dc5-92fc-e1132e951276",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -603852,6 +605297,80 @@
             ]
           },
           "reason": "Ruling 281 (batch Q6 A+B, 2026-11-15): start bit and end bit on N -> Bool; the eventually-false tapes as one set (shifted copies of bottom, silentFrom, the local floors through tapeIso), countable, trials-null for 0 < p, measure one at p = 0 (StartBit.lean).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ad872065-e745-47f2-aefb-055df1d94a5b",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_scaled_n2Real",
+            "short": "spanGap_scaled_n2Real"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_scaled_n2Real",
+            "short": "spanGap_scaled_n2Real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ad9c85a7-5559-4393-815f-b677c7e6ea23",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_n2Real",
+            "short": "spanGap_n2Real"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_n2Real",
+            "short": "spanGap_n2Real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -605379,6 +606898,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "af484a94-9d46-4e9a-b7d8-52bbb8cf69ad",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.harm_no_log_law",
+            "short": "harm_no_log_law"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.harm_no_log_law",
+            "short": "harm_no_log_law",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -607054,6 +608610,43 @@
             ]
           },
           "reason": "lane F arc 2: snapEmbed in the die (Incompleteness.lean § I-b)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b18ac527-430b-4b14-a7fe-5a84c10653b2",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.arc_unitCirc",
+            "short": "arc_unitCirc"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.arc_unitCirc",
+            "short": "arc_unitCirc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -612341,6 +613934,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b852f030-45f3-46c7-bd38-82fc8f470bf7",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.harmGaps",
+            "short": "harmGaps"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.harmGaps",
+            "short": "harmGaps",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b8594719-13cf-4b25-a8f6-038a4f2e5f70",
           "new": {
@@ -613708,6 +615338,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ba3738bb-9eb9-4d54-8c16-ebbe1216570b",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.volume_iUnion_n2GapInt",
+            "short": "volume_iUnion_n2GapInt"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.volume_iUnion_n2GapInt",
+            "short": "volume_iUnion_n2GapInt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ba4277b5-06e2-49b4-8188-2fc946bb6c7f",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -614032,6 +615699,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "baacd1a0-a7a9-400c-a249-f2428ce4127c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chordSum_tendsto",
+            "short": "chordSum_tendsto"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chordSum_tendsto",
+            "short": "chordSum_tendsto",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -614701,6 +616405,43 @@
             ]
           },
           "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bbb193df-ca94-4c38-acb0-7a8f8472c9e9",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_cantorSet",
+            "short": "spanGap_cantorSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_cantorSet",
+            "short": "spanGap_cantorSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -615476,6 +617217,43 @@
             "role": []
           },
           "reason": "ninf-retraction-1030: the round trip through ofOption: a left inverse is a right inverse (Escardó's density lemma), hence LPO; LPO data gives NInf ≃ Option ℕ; ofOption onto iff LPO; the round trip as a motion on Option ℕ ⊕ NInf (Die § XXIII); Tim ruling 2026-10-30",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bcf0934a-8ee0-4688-8ef8-0f64414109b6",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.logb_inv_gapRemaining_ladder",
+            "short": "logb_inv_gapRemaining_ladder"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.logb_inv_gapRemaining_ladder",
+            "short": "logb_inv_gapRemaining_ladder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -618112,6 +619890,43 @@
             ]
           },
           "reason": "Die: orthogonal projection as a motion; UpOrthogonal premise, landings determine UP with it, oblique control without it, StrictIso blind to the angle (Tim approved 2026-11-13)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c0922ed2-fd83-4a3a-a1ea-16894dc9a598",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist_chord_lt_arc",
+            "short": "bendTwist_chord_lt_arc"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bendTwist_chord_lt_arc",
+            "short": "bendTwist_chord_lt_arc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -620965,6 +622780,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c4d018de-22cf-4784-b91c-a7b4d50889e1",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapRemaining_harm",
+            "short": "gapRemaining_harm"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapRemaining_harm",
+            "short": "gapRemaining_harm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c4dfb6d3-52d9-4de9-af05-2f1253ea95b4",
           "new": {
             "file": "ZeroParadox/Information/Dial.lean",
@@ -621587,6 +623439,43 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c5a66408-8a86-4447-95a2-292458e20ed8",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount",
+            "short": "gapCount"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount",
+            "short": "gapCount",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "node-algebra"
             ]
@@ -622145,6 +624034,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c63b77dc-1123-41d3-9d15-4a13a5468e18",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chord",
+            "short": "chord"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chord",
+            "short": "chord",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -627764,6 +629690,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cd6ed8fc-52a8-4c8e-ac7f-8ae0f85a1db0",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chordSum_le_double",
+            "short": "chordSum_le_double"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chordSum_le_double",
+            "short": "chordSum_le_double",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cd73e9b2-7808-43cf-a068-9f2ec29ca46b",
           "new": {
             "file": "ZeroParadox/Information/BottomTotality.lean",
@@ -629272,6 +631235,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cf3aa72b-4d48-4ba7-9f64-de45471cd861",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Real_subset_Icc",
+            "short": "n2Real_subset_Icc"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Real_subset_Icc",
+            "short": "n2Real_subset_Icc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cf3c6dc9-be28-4b6b-9b73-51aefb885e1d",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -629672,6 +631672,43 @@
             ]
           },
           "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cf98c133-d72e-4455-a3cb-a2d7f6aa5cd3",
+          "new": {
+            "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_arc_zero",
+            "short": "q2_arc_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.q2_arc_zero",
+            "short": "q2_arc_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -630459,6 +632496,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d0b2df89-8fb0-42d3-bdc3-155baed54e65",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapRemaining_ladder",
+            "short": "gapRemaining_ladder"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapRemaining_ladder",
+            "short": "gapRemaining_ladder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d0bddbdb-f355-467f-b1bb-d0d8e4c57a33",
           "new": {
             "file": "ZeroParadox/Multihomed/LimitMotion.lean",
@@ -630596,6 +632670,43 @@
             ]
           },
           "reason": "die-sameness round 1: upper control (HomeoIso without LipIso: R vs (-1,1); x2 vs x4 on R) ported from probe 39dd870c96, and measured choice members at the HomeoIso level (handTopBool vs Mathlib Bool, N)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d0e3ceec-2c0b-4af6-a557-609ae28f18c3",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Real",
+            "short": "n2Real"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2Real",
+            "short": "n2Real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -633993,6 +636104,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d53dc6c7-db93-48b6-ad29-7beb303392a7",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_eq_zero_of_ordConnected",
+            "short": "spanGap_eq_zero_of_ordConnected"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_eq_zero_of_ordConnected",
+            "short": "spanGap_eq_zero_of_ordConnected",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -645734,6 +647882,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e490f0b9-9201-4cb3-9b2d-b4855c0a901d",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chord_lt",
+            "short": "chord_lt"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BendDie.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.chord_lt",
+            "short": "chord_lt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e49432a5-9094-474d-ad23-4e7560abf779",
           "new": {
             "file": "ZeroParadox/Valuation/PadicWavelet.lean",
@@ -646843,6 +649028,43 @@
             ]
           },
           "reason": "Land DoublingAndTree: one-point self-reference at the bottom of Comb does not force the binary tree; an order embedding of the square into the carrier does, one way; four formalizations of one-point-and-two measured (2026-11-11).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e598c2d2-f2ec-431e-9f34-ccad8edb3f87",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.volume_cantorSet",
+            "short": "volume_cantorSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.volume_cantorSet",
+            "short": "volume_cantorSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -649444,6 +651666,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e8d4c5ff-caf0-4969-b71d-5099f423e761",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dimH_n2Real",
+            "short": "dimH_n2Real"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dimH_n2Real",
+            "short": "dimH_n2Real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e8d6ed2d-bc6a-4f9a-9ff8-4d7059b050bc",
           "new": {
@@ -651799,6 +654058,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ebae55f9-1579-42cf-92dd-6b0c92bb35a9",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.volume_n2GapInt",
+            "short": "volume_n2GapInt"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.volume_n2GapInt",
+            "short": "volume_n2GapInt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -656394,6 +658690,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f2397932-6b34-4306-af0c-de936b7d7d3d",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount_harm_zero",
+            "short": "gapCount_harm_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gapCount_harm_zero",
+            "short": "gapCount_harm_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f245584e-bcef-40c0-9a91-a00b97f33f9a",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -658020,6 +660353,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f4bfee3c-5a0a-4e70-bc4a-ef26314fdc1c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ediam_n2Real",
+            "short": "ediam_n2Real"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ediam_n2Real",
+            "short": "ediam_n2Real",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f4cc67a4-abec-47a8-9a71-ea105ad585ae",
           "new": {
             "file": "ZeroParadox/Multihomed/TwoAdicBend.lean",
@@ -659529,6 +661899,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f66e3e90-5bd1-49e2-b564-6fc32fb0f7c4",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2GapInt",
+            "short": "n2GapInt"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2GapInt",
+            "short": "n2GapInt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f66fa21e-b488-45b5-8485-efbddab438b8",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -659593,6 +662000,43 @@
             ]
           },
           "reason": "Land BranchingPerfect: a product of nonempty discrete levels is perfect iff infinitely many levels are nontrivial; crowded-and-cut on Cantor space and on Z_2 as separate theorems; lexicographic gaps (2026-11-20).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f677b59c-4073-4c0f-b41a-78998f21d0ed",
+          "new": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_eq_zero_iff_interval",
+            "short": "spanGap_eq_zero_iff_interval"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/ConnectedNoFirstStep.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.spanGap_eq_zero_iff_interval",
+            "short": "spanGap_eq_zero_iff_interval",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -661129,6 +663573,43 @@
             "role": []
           },
           "reason": "ninf-retraction-1030: the round trip through ofOption: a left inverse is a right inverse (Escardó's density lemma), hence LPO; LPO data gives NInf ≃ Option ℕ; ofOption onto iff LPO; the round trip as a motion on Option ℕ ⊕ NInf (Die § XXIII); Tim ruling 2026-10-30",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f886a9dd-bd05-4001-a541-ddde807c8286",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.n2GapInt_pairwise_disjoint",
+            "short": "n2GapInt_pairwise_disjoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.n2GapInt_pairwise_disjoint",
+            "short": "n2GapInt_pairwise_disjoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gap, count-vs-amount and arc-vs-chord (Tim 2026-11-27/28): spanGap on the line (ConnectedNoFirstStep), N2 in R with cxQ2 as a gap count and the ladder log law (Dial § XIII), arc vs chord on the unit circle (BendDie § VII) and the 2-adic chord with no arc (TwoAdicBend § VIII).",
           "verify": {
             "axioms": null,
             "sorry_free": null

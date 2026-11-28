@@ -1,6 +1,7 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): multiplier maps `z ↦ c z` on `OnePoint ℚ_[2]` up to topological conjugacy, the 2-adic companion to BendDie: the discrete twist `u ^ v(z) * z`, every multiplier with `‖c‖ ≠ 1` conjugate to `×2`, four commuting flips, four multipliers on ℂ, and attracting and repelling fixed points of a multiplier map on `OnePoint K`. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Multihomed.BendDie
 import ZeroParadox.Valuation.RiemannSphere
+import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Mathlib.Tactic
 
 /-!
@@ -1501,6 +1502,37 @@ theorem scale_control_rotation :
 
 end Stability
 
+/-! ## § VIII. Chord with no arc: the 2-adic step -/
+
+section NoArc
+
+/-- `Statement:` every continuous `γ : ℝ → ℚ_[2]` has arc length (`eVariationOn`) 0 on every
+    `s ⊆ ℝ`. `Reading:` CARRIER, `ℚ_[2]` is totally disconnected, so `γ` is constant; the path form
+    on `[0, 1]` is `c3_irreversible` (`ZeroParadox/Valuation/Padic.lean`). -/
+theorem q2_arc_zero {γ : ℝ → ℚ_[2]} (hγ : Continuous γ) (s : Set ℝ) : eVariationOn γ s = 0 :=
+  eVariationOn.constant_on (by
+    rintro _ ⟨a, _, rfl⟩ _ ⟨b, _, rfl⟩
+    exact (isPreconnected_range hγ).subsingleton ⟨a, rfl⟩ ⟨b, rfl⟩)
+
+/-- `Statement:` the up-and-over step `dTwist 3` sends `2` to `6`, the chord `dist 2 6` is `1/4`, and
+    no continuous `γ : ℝ → ℚ_[2]` has `γ 0 = 2` and `γ 1 = 6`: a chord with no arc. On ℝ the chord
+    falls short of an arc (`chordSum_lt`) and the gap closes under refinement (`chordSum_tendsto`). -/
+theorem dTwist_step_no_arc :
+    dTwist 3 2 = 6 ∧ dist (2 : ℚ_[2]) 6 = 1 / 4 ∧
+    ¬ ∃ γ : ℝ → ℚ_[2], Continuous γ ∧ γ 0 = 2 ∧ γ 1 = 6 := by
+  have hd : dTwist 3 2 = 6 := by
+    unfold dTwist; rw [tb_val_two, zpow_one]; norm_num
+  refine ⟨hd, ?_, ?_⟩
+  · rw [dist_eq_norm, show (2 : ℚ_[2]) - 6 = -(2 ^ 2) by norm_num, norm_neg, norm_pow]
+    have := Padic.norm_p (p := 2); push_cast at this; rw [this]
+    norm_num
+  · rintro ⟨γ, hγ, h0, h1⟩
+    have := (isPreconnected_range hγ).subsingleton ⟨0, rfl⟩ ⟨1, rfl⟩
+    rw [h0, h1] at this
+    norm_num at this
+
+end NoArc
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -1659,4 +1691,6 @@ open ZeroParadox
 #print axioms padic_two_poles
 #print axioms scale_control_one
 #print axioms scale_control_rotation
+#print axioms q2_arc_zero
+#print axioms dTwist_step_no_arc
 end PurityCheck
