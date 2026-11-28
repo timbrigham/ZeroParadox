@@ -4,6 +4,7 @@ import ZeroParadox.Information.TwoRequirements
 import ZeroParadox.Information.SnapEpsilonZero
 import ZeroParadox.Valuation.UltrametricView
 import ZeroParadox.Reals.ConnectedNoFirstStep
+import ZeroParadox.Valuation.PadicCharacter
 import Mathlib.Topology.MetricSpace.HausdorffDimension
 import Mathlib.Probability.Kernel.IonescuTulcea.Traj
 import Mathlib.Probability.Kernel.Invariance
@@ -30,7 +31,7 @@ analog and a digital value
 Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires within `n`
 stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`, the step-off mass, `Bool × ℕ∞ᵒᵈ` and its 2-adic norm form `Bool × N2`; § V-VI: schedules,
 the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations;
-§ XI: a Markov kernel on the die; § XII: lumping, reversibility under coarse-graining; § XIII: `cxQ2` as a gap count. -/
+§ XI: a Markov kernel on the die; § XII: lumping, reversibility under coarse-graining; § XIII: `cxQ2` as a gap count; § XIV: zoom-out on the 2-adic tower. -/
 
 set_option maxHeartbeats 400000
 
@@ -2277,7 +2278,7 @@ theorem boolSwap_reversible :
 
 /-- `Statement:` `rot4` is reversible w.r.t. no probability measure, lumps along `parity4` to the swap
 of `Bool`, and the swap is reversible w.r.t. the counting measure on `Bool`, which is not a probability
-measure (with a probability measure: `coarse_graining_trade`).
+measure (with a probability measure: `coarse_graining_trade`); `parity4` is `zoom 1` (`parity4_eq_zoom`).
 `Reading:` coarse-graining erases an arrow. -/
 theorem a4_direction_erased :
     (∀ π : Measure (Fin 4), IsProbabilityMeasure π →
@@ -3505,6 +3506,277 @@ theorem harm_no_log_law :
 
 end GapCount
 
+/-! ### § XIV. Zooming out on the 2-adic tower: a coarse-graining observer
+
+The observer `zoom n : ZMod (2^(n+1)) →+* ZMod (2^n)` forgets the top binary digit, and the residue
+maps `PadicInt.toZModPow n` read ℤ_[2] at every level. Lumping along a group homomorphism is the
+strong lumpability of § XII (Kemeny-Snell and Dynkin, cited there). The uniform law is Mathlib's
+`ProbabilityTheory.uniformOn Set.univ`. -/
+
+section ZoomTower
+
+open scoped ENNReal
+
+section Generic
+
+variable {G H : Type*} [AddCommGroup G] [AddCommGroup H]
+  [MeasurableSpace G] [DiscreteMeasurableSpace G] [MeasurableSpace H] [DiscreteMeasurableSpace H]
+
+/-- `Statement:` the symmetric walk: step to `x + s` or `x - s`, each with mass 1/2. -/
+noncomputable def symWalk (s : G) : Kernel G G where
+  toFun x := (2⁻¹ : ℝ≥0∞) • Measure.dirac (x + s) + (2⁻¹ : ℝ≥0∞) • Measure.dirac (x - s)
+  measurable' := Measurable.of_discrete
+
+/-- `Statement:` `symWalk s x` unfolds to its two Dirac masses, by `rfl`. -/
+theorem symWalk_apply (s x : G) : symWalk s x =
+    (2⁻¹ : ℝ≥0∞) • Measure.dirac (x + s) + (2⁻¹ : ℝ≥0∞) • Measure.dirac (x - s) := rfl
+
+/-- `Statement:` `symWalk s` is a Markov kernel. -/
+instance isMarkovKernel_symWalk (s : G) : IsMarkovKernel (symWalk s) :=
+  ⟨fun x => ⟨by simp [symWalk_apply, ENNReal.inv_two_add_inv_two]⟩⟩
+
+/-- `Statement:` a fair random bit at offset `t`: stay at `x` or move to `x + t`, each with mass 1/2. -/
+noncomputable def topBit (t : G) : Kernel G G where
+  toFun x := (2⁻¹ : ℝ≥0∞) • Measure.dirac x + (2⁻¹ : ℝ≥0∞) • Measure.dirac (x + t)
+  measurable' := Measurable.of_discrete
+
+/-- `Statement:` `topBit t x` unfolds to its two Dirac masses, by `rfl`. -/
+theorem topBit_apply (t x : G) : topBit t x =
+    (2⁻¹ : ℝ≥0∞) • Measure.dirac x + (2⁻¹ : ℝ≥0∞) • Measure.dirac (x + t) := rfl
+
+/-- `Statement:` `topBit t` is a Markov kernel. -/
+instance isMarkovKernel_topBit (t : G) : IsMarkovKernel (topBit t) :=
+  ⟨fun x => ⟨by simp [topBit_apply, ENNReal.inv_two_add_inv_two]⟩⟩
+
+/-- `Statement:` along every additive map `φ`, `symWalk s` lumps to `symWalk (φ s)`. -/
+theorem symWalk_lumps (φ : G →+ H) (s : G) : Lumps (symWalk s) (symWalk (φ s)) φ := by
+  intro x
+  rw [symWalk_apply, symWalk_apply, Measure.map_add _ _ Measurable.of_discrete,
+    Measure.map_smul, Measure.map_smul, Measure.map_dirac' Measurable.of_discrete,
+    Measure.map_dirac' Measurable.of_discrete, map_add, map_sub]
+  all_goals exact Measurable.of_discrete.aemeasurable
+
+/-- `Statement:` if `φ t = 0`, `topBit t` lumps along `φ` to the identity kernel. -/
+theorem topBit_lumps_id (φ : G →+ H) (t : G) (ht : φ t = 0) : Lumps (topBit t) Kernel.id φ := by
+  intro x
+  rw [topBit_apply, Kernel.id_apply, Measure.map_add _ _ Measurable.of_discrete,
+    Measure.map_smul, Measure.map_smul, Measure.map_dirac' Measurable.of_discrete,
+    Measure.map_dirac' Measurable.of_discrete, map_add, ht, add_zero, ← add_smul,
+    ENNReal.inv_two_add_inv_two, one_smul]
+  all_goals exact Measurable.of_discrete.aemeasurable
+
+/-- `Statement:` integrating `dirac (g x) D` over `C` gives `μ (g ⁻¹' D ∩ C)`. -/
+theorem setLIntegral_dirac_comp (g : G → G) (μ : Measure G) (C D : Set G) :
+    ∫⁻ x in C, Measure.dirac (g x) D ∂μ = μ (g ⁻¹' D ∩ C) := by
+  simp_rw [Measure.dirac_apply' _ (MeasurableSet.of_discrete (s := D))]
+  have : ∀ x, D.indicator (1 : G → ℝ≥0∞) (g x) = (g ⁻¹' D).indicator 1 x := fun _ => rfl
+  simp_rw [this]
+  rw [lintegral_indicator_one MeasurableSet.of_discrete,
+    Measure.restrict_apply MeasurableSet.of_discrete]
+
+/-- `Statement:` if `μ` is invariant under `· + s`, the `+s` flow from `A` into `B` equals the `-s`
+flow from `B` into `A`. -/
+theorem symWalk_translate_pair (s : G) (μ : Measure G) (hμ : μ.map (· + s) = μ) (A B : Set G) :
+    ∫⁻ x in A, Measure.dirac (x + s) B ∂μ = ∫⁻ x in B, Measure.dirac (x - s) A ∂μ := by
+  rw [setLIntegral_dirac_comp (· + s), setLIntegral_dirac_comp (· - s)]
+  conv_rhs => rw [← hμ]
+  rw [Measure.map_apply Measurable.of_discrete MeasurableSet.of_discrete]
+  congr 1
+  ext x; simp [and_comm]
+
+/-- `Statement:` `symWalk s` is reversible w.r.t. every measure invariant under `· + s`. -/
+theorem symWalk_reversible (s : G) (μ : Measure G) (hμ : μ.map (· + s) = μ) :
+    (symWalk s).IsReversible μ := by
+  intro A B _ _
+  simp only [symWalk_apply, Measure.add_apply, Measure.smul_apply, smul_eq_mul]
+  rw [lintegral_add_left Measurable.of_discrete, lintegral_add_left Measurable.of_discrete,
+    lintegral_const_mul _ Measurable.of_discrete, lintegral_const_mul _ Measurable.of_discrete,
+    lintegral_const_mul _ Measurable.of_discrete, lintegral_const_mul _ Measurable.of_discrete,
+    symWalk_translate_pair s μ hμ A B, ← symWalk_translate_pair s μ hμ B A, add_comm]
+
+/-- `Statement:` on a finite carrier, a measure with the same mass `c` on every point is invariant
+under every translation. -/
+theorem map_add_const_of_singleton_const [Finite G] (μ : Measure G) (c : ℝ≥0∞)
+    (hc : ∀ x, μ {x} = c) (s : G) : μ.map (· + s) = μ := by
+  refine Measure.ext_iff_singleton.2 fun y => ?_
+  rw [Measure.map_apply Measurable.of_discrete MeasurableSet.of_discrete]
+  have : (· + s) ⁻¹' ({y} : Set G) = {y - s} := by
+    ext x; simp only [Set.mem_preimage, Set.mem_singleton_iff]; exact eq_sub_iff_add_eq.symm
+  rw [this, hc, hc]
+
+/-- `Statement:` the uniform law `uniformOn Set.univ` is invariant under every translation. -/
+theorem uniformOn_univ_map_add [Fintype G] (s : G) :
+    (uniformOn (Set.univ : Set G)).map (· + s) = uniformOn Set.univ :=
+  map_add_const_of_singleton_const _ (1 / (Fintype.card G : ℝ≥0∞))
+    (fun x => by rw [uniformOn_univ, Measure.count_singleton]) s
+
+end Generic
+
+/-- `Statement:` zoom out one binary digit: the reduction `ZMod (2^(n+1)) →+* ZMod (2^n)`. -/
+noncomputable def zoom (n : ℕ) : ZMod (2 ^ (n + 1)) →+* ZMod (2 ^ n) :=
+  ZMod.castHom (pow_dvd_pow 2 (Nat.le_succ n)) _
+
+/-- `Statement:` `zoom n` is measurable. -/
+theorem zoom_measurable (n : ℕ) : Measurable (zoom n) := Measurable.of_discrete
+
+/-- `Statement:` the ±1 walk on `ZMod (2^(n+1))` lumps along `zoom n` to the ±1 walk on `ZMod (2^n)`. -/
+theorem zoom_symWalk_lumps (n : ℕ) :
+    Lumps (symWalk (1 : ZMod (2 ^ (n + 1)))) (symWalk (1 : ZMod (2 ^ n))) (zoom n) := by
+  have h := symWalk_lumps (zoom n).toAddMonoidHom (1 : ZMod (2 ^ (n + 1)))
+  simpa [map_one] using h
+
+/-- `Statement:` the fair random top digit `topBit (2^n)` on `ZMod (2^(n+1))` lumps along `zoom n` to
+the identity kernel. -/
+theorem zoom_topBit_lumps_id (n : ℕ) :
+    Lumps (topBit (2 ^ n : ZMod (2 ^ (n + 1)))) Kernel.id (zoom n) := by
+  have h := topBit_lumps_id (zoom n).toAddMonoidHom (2 ^ n : ZMod (2 ^ (n + 1))) (by
+    show zoom n (2 ^ n) = 0
+    rw [map_pow, map_ofNat]
+    exact_mod_cast ZMod.natCast_self (2 ^ n))
+  simpa using h
+
+/-- `Statement:` doubling on `ZMod (2^(n+1))` lumps along `zoom n` to doubling on `ZMod (2^n)`. -/
+theorem zoom_doubling_lumps (n : ℕ) :
+    Lumps (Kernel.deterministic (fun x : ZMod (2 ^ (n + 1)) => 2 * x) Measurable.of_discrete)
+      (Kernel.deterministic (fun x : ZMod (2 ^ n) => 2 * x) Measurable.of_discrete) (zoom n) :=
+  (lumps_deterministic_iff _ _ (zoom_measurable n)).2 fun x => by simp [map_mul, map_ofNat]
+
+/-- `Statement:` the rotation `x ↦ x + 1` on `ZMod (2^(n+1))` lumps along `zoom n` to the rotation on
+`ZMod (2^n)`. -/
+theorem zoom_rot_lumps (n : ℕ) :
+    Lumps (Kernel.deterministic (fun x : ZMod (2 ^ (n + 1)) => x + 1) Measurable.of_discrete)
+      (Kernel.deterministic (fun x : ZMod (2 ^ n) => x + 1) Measurable.of_discrete) (zoom n) :=
+  (lumps_deterministic_iff _ _ (zoom_measurable n)).2 fun x => by simp [map_add, map_one]
+
+/-- `Statement:` the right shift on `ZMod 8`, `x ↦ ⌊x.val / 2⌋`. -/
+def shr8 (x : ZMod 8) : ZMod 8 := ((x.val / 2 : ℕ) : ZMod 8)
+
+/-- `Statement:` CONTROL, the right shift on `ZMod 8` lumps along `zoom 2` to no kernel on `ZMod 4`:
+`0` and `4` share a class and land in classes `0` and `2`. -/
+theorem shr8_not_lumps :
+    ¬ ∃ L : Kernel (ZMod 4) (ZMod 4),
+      Lumps (Kernel.deterministic shr8 Measurable.of_discrete) L (zoom 2) := by
+  rintro ⟨L, h⟩
+  have e := h.fiberConst 0 4 (by decide)
+  simp only [Kernel.deterministic_apply, Measure.map_dirac' (zoom_measurable 2)] at e
+  rw [dirac_eq_dirac_iff] at e
+  revert e
+  decide
+
+/-- `Statement:` the ±1 walk on `ZMod (2^n)` is reversible w.r.t. the uniform law. -/
+theorem symWalk_unif_reversible (n : ℕ) :
+    (symWalk (1 : ZMod (2 ^ n))).IsReversible (uniformOn Set.univ) :=
+  symWalk_reversible _ _ (uniformOn_univ_map_add _)
+
+/-- `Statement:` from the uniform law on `ZMod (2^(n+1))`, the run of the ±1 walk read through `zoom n`
+has the law of the ±1 walk on `ZMod (2^n)` from the image law; that walk is reversible w.r.t. the image
+law; and every window of the observed run has the law of its reversal. -/
+theorem zoom_symWalk_trade (n : ℕ) :
+    (chainLaw (uniformOn (Set.univ : Set (ZMod (2 ^ (n + 1))))) (symWalk 1)).map
+          (fun x k => zoom n (x k)) =
+        chainLaw ((uniformOn (Set.univ : Set (ZMod (2 ^ (n + 1))))).map (zoom n)) (symWalk 1) ∧
+      (symWalk (1 : ZMod (2 ^ n))).IsReversible
+        ((uniformOn (Set.univ : Set (ZMod (2 ^ (n + 1))))).map (zoom n)) ∧
+      ∀ t m : ℕ,
+        (chainLaw (uniformOn (Set.univ : Set (ZMod (2 ^ (n + 1))))) (symWalk 1)).map
+            (fun x (i : Fin (m + 1)) => zoom n (x (t + i))) =
+          (chainLaw (uniformOn (Set.univ : Set (ZMod (2 ^ (n + 1))))) (symWalk 1)).map
+            (fun x (i : Fin (m + 1)) => zoom n (x (t + Fin.rev i))) :=
+  ⟨chainLaw_map_of_lumps _ _ _ (zoom_measurable n) (zoom_symWalk_lumps n),
+    isReversible_map_of_lumps (zoom_measurable n) (zoom_symWalk_lumps n)
+      (symWalk_unif_reversible (n + 1)),
+    fun t m => chainLaw_window_map_reverse _ _ (symWalk_unif_reversible (n + 1)) _
+      (zoom_measurable n) t m⟩
+
+/-- `Statement:` the rotation `x ↦ x + 1` on `ZMod (2^(n+2))` is reversible w.r.t. no probability
+measure (`rot4_not_reversible` is the case of `Fin 4`). -/
+theorem rot_not_reversible (n : ℕ) (μ : Measure (ZMod (2 ^ (n + 2)))) [IsProbabilityMeasure μ] :
+    ¬ (Kernel.deterministic (fun x : ZMod (2 ^ (n + 2)) => x + 1)
+      Measurable.of_discrete).IsReversible μ := by
+  intro h
+  have h2 : (2 : ZMod (2 ^ (n + 2))) ≠ 0 := by
+    intro e
+    have : ((2 : ℕ) : ZMod (2 ^ (n + 2))) = 0 := by exact_mod_cast e
+    rw [ZMod.natCast_eq_zero_iff] at this
+    have := Nat.le_of_dvd (by norm_num) this
+    have : 4 ≤ 2 ^ (n + 2) := by
+      calc 4 = 2 ^ 2 := by norm_num
+        _ ≤ 2 ^ (n + 2) := Nat.pow_le_pow_right (by norm_num) (by omega)
+    omega
+  have hz : ∀ x : ZMod (2 ^ (n + 2)), μ {x} = 0 := by
+    intro x
+    have := h (MeasurableSet.of_discrete (s := {x})) (MeasurableSet.of_discrete (s := {x + 1}))
+    rw [lintegral_singleton, lintegral_singleton, Kernel.deterministic_apply,
+      Kernel.deterministic_apply, Measure.dirac_apply' _ MeasurableSet.of_discrete,
+      Measure.dirac_apply' _ MeasurableSet.of_discrete] at this
+    have hne : x + 1 + 1 ≠ x := by
+      intro e; apply h2
+      calc (2 : ZMod (2 ^ (n + 2))) = (x + 1 + 1) - x := by ring
+        _ = 0 := by rw [e, sub_self]
+    simpa [Set.indicator, hne] using this
+  have : μ = 0 := (Measure.ext_iff_singleton).2 (by simpa using hz)
+  exact IsProbabilityMeasure.ne_zero μ this
+
+/-- `Statement:` the rotation on `ZMod 2`, the flip, is reversible w.r.t. the uniform law. -/
+theorem rot2_reversible :
+    (Kernel.deterministic (fun x : ZMod 2 => x + 1) Measurable.of_discrete).IsReversible
+      (uniformOn Set.univ) :=
+  isReversible_deterministic_involutive _ (by intro x; fin_cases x <;> rfl)
+    (uniformOn_univ_map_add 1)
+
+/-- `Statement:` the rotation on `ZMod 4` is reversible w.r.t. no probability measure, lumps along
+`zoom 1` to the flip on `ZMod 2`, and the flip is reversible w.r.t. the uniform law.
+`Reading:` zooming out is coarse-graining; on this tower the rotation's arrow is erased only at the
+single-digit level; fine reversible ⇒ coarse reversible (`isReversible_map_of_lumps`), the converse
+fails. -/
+theorem zoom_last_step_erases_arrow :
+    (∀ μ : Measure (ZMod 4), IsProbabilityMeasure μ →
+        ¬ (Kernel.deterministic (fun x : ZMod 4 => x + 1) Measurable.of_discrete).IsReversible μ) ∧
+      Lumps (Kernel.deterministic (fun x : ZMod (2 ^ 2) => x + 1) Measurable.of_discrete)
+        (Kernel.deterministic (fun x : ZMod (2 ^ 1) => x + 1) Measurable.of_discrete) (zoom 1) ∧
+      (Kernel.deterministic (fun x : ZMod 2 => x + 1) Measurable.of_discrete).IsReversible
+        (uniformOn Set.univ) :=
+  ⟨fun μ _ => rot_not_reversible 0 μ, zoom_rot_lumps 1, rot2_reversible⟩
+
+/-- `Statement:` from `ZMod (2^(n+3))` to `ZMod (2^(n+2))` the rotation lumps to the rotation, and on
+neither side is it reversible w.r.t. any probability measure. -/
+theorem zoom_preserves_rot_arrow (n : ℕ) :
+    (∀ μ : Measure (ZMod (2 ^ (n + 3))), IsProbabilityMeasure μ →
+        ¬ (Kernel.deterministic (fun x : ZMod (2 ^ (n + 3)) => x + 1)
+          Measurable.of_discrete).IsReversible μ) ∧
+      Lumps (Kernel.deterministic (fun x : ZMod (2 ^ (n + 2 + 1)) => x + 1) Measurable.of_discrete)
+        (Kernel.deterministic (fun x : ZMod (2 ^ (n + 2)) => x + 1) Measurable.of_discrete)
+        (zoom (n + 2)) ∧
+      (∀ ν : Measure (ZMod (2 ^ (n + 2))), IsProbabilityMeasure ν →
+        ¬ (Kernel.deterministic (fun x : ZMod (2 ^ (n + 2)) => x + 1)
+          Measurable.of_discrete).IsReversible ν) :=
+  ⟨fun μ _ => rot_not_reversible (n + 1) μ, zoom_rot_lumps (n + 2),
+    fun ν _ => rot_not_reversible n ν⟩
+
+/-- `Statement:` on `Fin 4 = ZMod 4`, `parity4 x` is `decide (zoom 1 x = 1)`. -/
+theorem parity4_eq_zoom (x : Fin 4) : parity4 x = decide (zoom 1 (x : ZMod 4) = 1) := by
+  fin_cases x <;> decide
+
+/-- `Statement:` the residue map `PadicInt.toZModPow n : ℤ_[2] → ZMod (2^n)` is measurable. -/
+theorem toZModPow_measurable (n : ℕ) : Measurable (PadicInt.toZModPow (p := 2) n) :=
+  measurable_to_countable' fun r => toZModPow_fiber_measurableSet n r
+
+/-- `Statement:` doubling on ℤ_[2] lumps along `PadicInt.toZModPow n` to doubling on `ZMod (2^n)`. -/
+theorem padic_doubling_lumps (n : ℕ) :
+    Lumps (Kernel.deterministic (fun x : ℤ_[2] => 2 * x)
+        (continuous_const.mul continuous_id).measurable)
+      (Kernel.deterministic (fun r : ZMod (2 ^ n) => 2 * r) Measurable.of_discrete)
+      (PadicInt.toZModPow n) :=
+  (lumps_deterministic_iff _ _ (toZModPow_measurable n)).2 fun x => by simp [map_mul, map_ofNat]
+
+/-- `Statement:` `zoom n ∘ toZModPow (n+1) = toZModPow n` on ℤ_[2] (Mathlib `PadicInt.cast_toZModPow`). -/
+theorem zoom_comp_toZModPow (n : ℕ) (x : ℤ_[2]) :
+    zoom n (PadicInt.toZModPow (n + 1) x) = PadicInt.toZModPow n x := by
+  unfold zoom
+  exact PadicInt.cast_toZModPow n (n + 1) (Nat.le_succ n) x
+
+end ZoomTower
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -3789,4 +4061,35 @@ open ZeroParadox
 #print axioms gapCount_harm_zero
 #print axioms gapCount_harm_two
 #print axioms harm_no_log_law
+#print axioms symWalk
+#print axioms symWalk_apply
+#print axioms isMarkovKernel_symWalk
+#print axioms topBit
+#print axioms topBit_apply
+#print axioms isMarkovKernel_topBit
+#print axioms symWalk_lumps
+#print axioms topBit_lumps_id
+#print axioms setLIntegral_dirac_comp
+#print axioms symWalk_translate_pair
+#print axioms symWalk_reversible
+#print axioms map_add_const_of_singleton_const
+#print axioms uniformOn_univ_map_add
+#print axioms zoom
+#print axioms zoom_measurable
+#print axioms zoom_symWalk_lumps
+#print axioms zoom_topBit_lumps_id
+#print axioms zoom_doubling_lumps
+#print axioms zoom_rot_lumps
+#print axioms shr8
+#print axioms shr8_not_lumps
+#print axioms symWalk_unif_reversible
+#print axioms zoom_symWalk_trade
+#print axioms rot_not_reversible
+#print axioms rot2_reversible
+#print axioms zoom_last_step_erases_arrow
+#print axioms zoom_preserves_rot_arrow
+#print axioms parity4_eq_zoom
+#print axioms toZModPow_measurable
+#print axioms padic_doubling_lumps
+#print axioms zoom_comp_toZModPow
 end PurityCheck

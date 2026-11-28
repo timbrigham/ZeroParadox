@@ -1026,6 +1026,20 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Reading: coarse-graining can erase an arrow, and from a reversible start it creates none, in any
 -- window of consecutive times.
 #check @ZeroParadox.coarse_graining_trade
+-- Statement: the rotation on `ZMod 4` is reversible w.r.t. no probability measure, lumps along `zoom 1`
+-- (forget the top binary digit) to the flip on `ZMod 2`, reversible w.r.t. the uniform law
+-- (`ZeroParadox/Information/Dial.lean` § XIV; `parity4_eq_zoom`: `parity4` is `zoom 1`).
+-- Reading: zooming out is coarse-graining; on this tower the rotation's arrow is erased only at the
+-- single-digit level.
+#check @ZeroParadox.zoom_last_step_erases_arrow
+-- Statement: from `ZMod (2^(n+3))` to `ZMod (2^(n+2))` the rotation lumps to the rotation, and on neither
+-- side is it reversible w.r.t. any probability measure.
+#check @ZeroParadox.zoom_preserves_rot_arrow
+-- Statement: from the uniform law on `ZMod (2^(n+1))`, the ±1 walk read through `zoom n` is the ±1 walk
+-- on `ZMod (2^n)`, reversible w.r.t. the image law, every window equal in law to its reversal.
+#check @ZeroParadox.zoom_symWalk_trade
+-- Statement: doubling on ℤ_[2] lumps along `PadicInt.toZModPow n` to doubling on `ZMod (2^n)`.
+#check @ZeroParadox.padic_doubling_lumps
 -- Statement: at every `x : ℚ_[2]`, 0 of `ℚ_[2]` included (both sides ⊤ of `ℕ∞`), `cxQ2 x` is the number of
 -- gaps of `n2Real` (`N2` read in ℝ) of length at least `‖x‖`; the amount missing, `spanGap`, is a separate
 -- quantity (`spanGap_scaled_n2Real`) (`ZeroParadox/Information/Dial.lean` § XIII).
