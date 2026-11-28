@@ -451830,6 +451830,105 @@
           "signature": "Proved here: binaryState_exhaustive (the type has two constructors), binaryState_card_two, not_pure_of_two_support, pmf_subsingleton_isPure, nontrivial_admits_non_pure_pmf. No declaration states zero entropy, the point-mass-or-full-support dichotomy for PMF BinaryState, or that a non-degenerate distribution needs EXACTLY two outcomes; the binary carrier is assumed by the inductive, not forced."
         },
         {
+          "decl": "ZeroParadox.complexity_unbounded",
+          "diff_kind": "not_stated",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "09f5e2e968ccf04b25d3310cf04839df5d8d053e11c7e08530595c8d3ecefe40",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: carried into the ruling-125 batch. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "0551161f1db7f8cd68a43731542cef3ef1db10ee794f461472a0d006f87d9076",
+              "reason": "ordinary (not_stated): carried to the approved ruling-125 Lean wording batch; any .lean edit is applied under that approval. The reader's note, DIFF 1: L31-32 and L65-67 call `complexity_unbounded` the forall-form in which arity n+1 strictly exceeds arity n, but it has the identical elaborated type as `complexity_ladder` (`complexity_unbounded := complexity_ladder`); no statement compares rungs. 'Exactly n' at L30/L48 overstates: the statement gives at least n. Ordinary; experimental file.",
+              "utc": "2026-11-28T03:16:41+00:00"
+            }
+          ],
+          "git_blob_id": "ea7dbeb7b56863ce14f48b22eb634c2ddd439db9",
+          "id": "rc-7433afa1-nine-2026-11-27#1",
+          "key_kind": "decl_name",
+          "kind": "diff1",
+          "kind_detail": "The reader's note, DIFF 1: L31-32 and L65-67 call `complexity_unbounded` the forall-form in which arity n+1 strictly exceeds arity n, but it has the identical elaborated type as `complexity_ladder` (`complexity_unbounded := complexity_ladder`); no statement compares rungs. 'Exactly n' at L30/L48 overstates: the statement gives at least n. Ordinary; experimental file.",
+          "line": 31,
+          "line_sha256": "09f5e2e968ccf04b25d3310cf04839df5d8d053e11c7e08530595c8d3ecefe40",
+          "path": "ZeroParadox/Valuation/ComplexityLadder.lean",
+          "prose": "carry exactly `n` independent variables, for any `n`. `complexity_unbounded` is the ∀-form: there is **no",
+          "registry_id": null,
+          "registry_id_reason": "not in the registry (ssot.json declarations, by new.qualified, at assembly)",
+          "run_id": "rc-7433afa1-nine-2026-11-27",
+          "signature": "see the elaborated types in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_ub"
+        },
+        {
+          "decl": "(module doc)",
+          "diff_kind": "not_stated",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "7a6b7f306eb74278e64ea6970d74bfc691a5bdd1a8d7543ba55720eb51d2c7e6",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: carried into the ruling-125 batch. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "5da3d137cb6d5d1b7cdc283731f672eb15f1a6dc9a5127fcbcab82e2b55286f2",
+              "reason": "ordinary (not_stated): carried to the approved ruling-125 Lean wording batch; any .lean edit is applied under that approval. The reader's note, DIFF 1: § III (L38-43) says compactness of a tree boundary is exactly finite branching; no declaration in the received sample states compactness and the prose is not tagged `Reading:`. Textbook-true, not backed here. Ordinary; experimental file.",
+              "utc": "2026-11-28T03:16:41+00:00"
+            }
+          ],
+          "git_blob_id": "71044ccf36b25f2d7ae5a4ac959f2e432eef948b",
+          "id": "rc-7433afa1-nine-2026-11-27#2",
+          "key_kind": "decl_name",
+          "kind": "diff1",
+          "kind_detail": "The reader's note, DIFF 1: § III (L38-43) says compactness of a tree boundary is exactly finite branching; no declaration in the received sample states compactness and the prose is not tagged `Reading:`. Textbook-true, not backed here. Ordinary; experimental file.",
+          "line": 38,
+          "line_sha256": "7a6b7f306eb74278e64ea6970d74bfc691a5bdd1a8d7543ba55720eb51d2c7e6",
+          "path": "ZeroParadox/Valuation/CantorPropertiesProbe.lean",
+          "prose": "**§ III — Compactness is a facet of the binary-arity precondition.** A Cantor set is *compact*, and for a",
+          "registry_id": null,
+          "registry_id_reason": "no single declaration: a module-doc section",
+          "run_id": "rc-7433afa1-nine-2026-11-27",
+          "signature": "see the elaborated types in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_ub"
+        },
+        {
+          "decl": "ZeroParadox.infinite_branch",
+          "diff_kind": "not_stated",
+          "dispositions": [
+            {
+              "decided_by": null,
+              "disposition": "open",
+              "line_sha256": "6538e2d40691c85de14b99c70ab675d1af995320a74a3b12da62afbbcbf774cf",
+              "reason": null,
+              "utc": null
+            },
+            {
+              "decided_by": "Orchestrating agent (caller of this recorder), 2026-11-27: carried into the ruling-125 batch. Not a Tim ruling.",
+              "disposition": "carried",
+              "line_sha256": "c1e48a75b7a1f3a4f573d9b9e9ca4605c72c57750af54bf82b2e6ecf1c7a5ac8",
+              "reason": "ordinary (not_stated): carried to the approved ruling-125 Lean wording batch; any .lean edit is applied under that approval. The reader's note, DIFF 1: the `infinite_branch` docstring (L110-112) ties compactness to finite branching; no declaration states compactness. Ordinary; experimental file.",
+              "utc": "2026-11-28T03:16:41+00:00"
+            }
+          ],
+          "git_blob_id": "b4afdacea1c2ce797246f629121e27c5a3433183",
+          "id": "rc-7433afa1-nine-2026-11-27#3",
+          "key_kind": "decl_name",
+          "kind": "diff1",
+          "kind_detail": "The reader's note, DIFF 1: the `infinite_branch` docstring (L110-112) ties compactness to finite branching; no declaration states compactness. Ordinary; experimental file.",
+          "line": 110,
+          "line_sha256": "6538e2d40691c85de14b99c70ab675d1af995320a74a3b12da62afbbcbf774cf",
+          "path": "ZeroParadox/Valuation/CompletenessCriticProbe.lean",
+          "prose": "the singletons `{i}` (`{i} ⊆ {j}` iff `i = j`). So the branching axis does not force *finite* arity, let",
+          "registry_id": null,
+          "registry_id_reason": "not in the registry (ssot.json declarations, by new.qualified, at assembly)",
+          "run_id": "rc-7433afa1-nine-2026-11-27",
+          "signature": "see the elaborated types in C:\\Users\\timbr\\AppData\\Local\\Temp\\claude\\f800153db889b496\\df830dce-1a65-464d-93cd-5891c94da9e4\\scratchpad\\rc_ub"
+        },
+        {
           "decl": "ZeroParadox.Th3JsdAlong",
           "diff_kind": "wrong_object",
           "dispositions": [
@@ -476656,6 +476755,62 @@
           "run_id": "rc-965e0c89-wait-2026-11-27",
           "skipped": [],
           "started_utc": "2026-11-28T01:30:05+00:00"
+        },
+        {
+          "brief": {
+            "git_blob_id": "d3642ae3166d2d26139a6f98cfba3af65c79aae7",
+            "path": ".claude/commands/reconstruct.md"
+          },
+          "commit": "9ab0bac48609691216a85047c357e0689ba04186",
+          "diff1_count": 3,
+          "examined": [
+            {
+              "git_blob_id": "e23e2fc98ac5f4ab9d5b08e8c6a602a738086e63",
+              "path": "ZeroParadox/Information/Dial.lean"
+            },
+            {
+              "git_blob_id": "02c838834ac2f81d4066f584b8c7efc35a0a093d",
+              "path": "ZeroParadox/Givens.lean"
+            },
+            {
+              "git_blob_id": "3cec861ff3f22f6350fe605a0f3177f3234130b2",
+              "path": "ZeroParadox/BottomCannotBe.lean"
+            },
+            {
+              "git_blob_id": "6770285764f6f663090b253ce76fd20fb25c67af",
+              "path": "ZeroParadox/DieCannotBe.lean"
+            },
+            {
+              "git_blob_id": "280acb6265d2457f530baf749117b40d45a5d099",
+              "path": "ZeroParadox/Order/SnapCannotBe.lean"
+            },
+            {
+              "git_blob_id": "7c2070629412376d63430311839be2d2caa8851b",
+              "path": "ZeroParadox/Reals/OrderedField.lean"
+            },
+            {
+              "git_blob_id": "71044ccf36b25f2d7ae5a4ac959f2e432eef948b",
+              "path": "ZeroParadox/Valuation/CantorPropertiesProbe.lean"
+            },
+            {
+              "git_blob_id": "b4afdacea1c2ce797246f629121e27c5a3433183",
+              "path": "ZeroParadox/Valuation/CompletenessCriticProbe.lean"
+            },
+            {
+              "git_blob_id": "ea7dbeb7b56863ce14f48b22eb634c2ddd439db9",
+              "path": "ZeroParadox/Valuation/ComplexityLadder.lean"
+            }
+          ],
+          "finished_utc": "2026-11-28T03:15:33+00:00",
+          "line_sha256": "4ef8a5bec34ce8297f8fe0eefa4d221657125dcc33c0b91cc2c29267daadd5ae",
+          "reader_model": "claude-opus-5-5",
+          "reader_prompt": {
+            "git_blob_id": "deb6699b508b6aebd95b17ed2e688b26ad3eaa0c",
+            "path": ".claude-local/notes/reconstruct_runs/prompts/deb6699b508b6aebd95b17ed2e688b26ad3eaa0c.md"
+          },
+          "run_id": "rc-7433afa1-nine-2026-11-27",
+          "skipped": [],
+          "started_utc": "2026-11-28T03:09:15+00:00"
         }
       ],
       "schema_version": "1"
