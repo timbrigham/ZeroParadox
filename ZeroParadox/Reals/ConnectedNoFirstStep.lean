@@ -19,7 +19,7 @@ sets covering the space, so a preconnected linear order has no first step anywhe
 needs conditional completeness, and ℚ is the control. Standard form: a linearly ordered space is
 connected iff it is a linear continuum, densely ordered and Dedekind complete (Steen–Seebach,
 *Counterexamples in Topology*); connectedness also forces completeness, which this file does not use.
-Also: span minus material on `S ⊆ ℝ`, 0 iff `S` is an interval (`spanGap_eq_zero_iff_interval`).
+Also: for closed, bounded, nonempty `S ⊆ ℝ`, span minus material is 0 iff `S` is a closed interval (`spanGap_eq_zero_iff_interval`).
 
 ## Engineer's Take
 
@@ -249,7 +249,9 @@ theorem volume_preCantorSet_le (n : ℕ) :
 
 /-- `Statement:` the Cantor set (Mathlib's `cantorSet`) has Lebesgue measure 0. Not located in
     Mathlib as of 2026-11-27: `cantorSet` occurs only in `Topology/Instances/CantorSet.lean` and
-    `Topology/MetricSpace/HausdorffAlexandroff.lean`, neither stating a measure. -/
+    `Topology/MetricSpace/HausdorffAlexandroff.lean`, neither stating a measure. Outside Mathlib:
+    `TauCeti.volume_cantorSet` (TauCetiProject/TauCeti@1a8f1810b514b1b0b7faad7bae9aada9bab9d23a,
+    `TauCeti/MeasureTheory/Measure/Lebesgue/CantorSet.lean`; source read, type not elaborated). -/
 theorem volume_cantorSet : volume cantorSet = 0 := by
   have hlt : ENNReal.ofReal (2 / 3) < 1 := by
     rw [ENNReal.ofReal_lt_one]; norm_num

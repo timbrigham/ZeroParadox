@@ -1044,9 +1044,13 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- gaps of `n2Real` (`N2` read in ℝ) of length at least `‖x‖`; the amount missing, `spanGap`, is a separate
 -- quantity (`spanGap_scaled_n2Real`) (`ZeroParadox/Information/Dial.lean` § XIII).
 #check @ZeroParadox.cxQ2_eq_gap_count
--- Statement: one way: on the fixed-ratio ladder scaled by `t > 0`, at every level, the gap count equals
--- `log₂ (1 / remaining) + log₂ t`; the converse is not claimed.
+-- Statement: on the fixed-ratio ladder scaled by `t > 0`, at every level, the gap count equals
+-- `log₂ (1 / remaining) + log₂ t`.
 #check @ZeroParadox.ladder_count_eq_log
+-- Statement: for positive summable gaps, a constant `c` with count = `log₂ (1 / remaining) + c` at every
+-- level exists iff the gaps are `gapLadder t` for some `t > 0`; controls in `ZeroParadox/Information/Dial.lean`
+-- § XIII drop summability (constant 1) and positivity (all 0).
+#check @ZeroParadox.log_law_iff_ladder
 -- Statement: CONTROL, on the gaps `1/((n+1)(n+2))` no constant `c` gives count = `log₂ (1 / remaining) + c`.
 #check @ZeroParadox.harm_no_log_law
 -- Statement: for nonzero `x : ℤ_[2]`, `Int.log 2 ‖x‖ = -x.valuation` and `q2Val x = (-Int.log 2 ‖x‖).toNat`

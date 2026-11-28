@@ -502,8 +502,9 @@ theorem boolNInfL_bot_cover_unique (a : BoolNInfL) : (⊥ : BoolNInfL) ⋖ a ↔
 /-- `Statement:` ⊥ of `Bool × ℕ∞ᵒᵈ` has a first step, is the greatest lower bound and the limit of
 `nInfDualRun`, a strictly decreasing run of covers avoiding it, and no `(false, x)` covers it.
 `Reading:` CARRIER, both faces sit above ⊥ of `Bool × ℕ∞ᵒᵈ`, on two directions; at ε₀ of `Ordinal`
-the limit face is below and the cover above. Both faces at one bottom force a non-linear order (one way);
-non-linearity alone does not supply them (the `example` below; compare `preconnected_iff_no_firstStep`). -/
+the limit face is below and the cover above. Both faces at one bottom force a non-linear order (one way:
+the linear-order `example` below; compare `preconnected_iff_no_firstStep`); non-linearity alone does not
+supply them (the `WithBot (Bool × Bool)` `example` below). -/
 theorem boolNInfL_bot_cover_and_limit :
     (@BotHasFirstStep BoolNInfL (supBotZPS BoolNInfL)) ∧
     ((∀ n, nInfDualRun n ≠ ⊥) ∧ StrictAnti nInfDualRun ∧
@@ -520,6 +521,25 @@ example {α : Type*} [LinearOrder α] [OrderBot α] {a : α} (ha : (⊥ : α) �
     (hS : ∀ x ∈ S, x ≠ ⊥) : ¬ IsGLB S (⊥ : α) := fun h =>
   ha.lt.not_ge (h.2 fun x hx => not_lt.1 fun hx' => ha.2 (bot_lt_iff_ne_bot.2 (hS x hx)) hx')
 -- Mathlib, the same exclusion: `IsGLB.isPredPrelimit_of_notMem` (order) and `CovBy.nhdsGT` (order topology).
+
+-- Statement: on `WithBot (Bool × Bool)`, a non-linear order, ⊥ is covered and is the greatest lower bound
+-- of no set avoiding it.
+example : (∃ a b : WithBot (Bool × Bool), ¬ a ≤ b ∧ ¬ b ≤ a) ∧
+    (⊥ : WithBot (Bool × Bool)) ⋖ ((⊥ : Bool × Bool) : WithBot (Bool × Bool)) ∧
+    ∀ S : Set (WithBot (Bool × Bool)), (∀ x ∈ S, x ≠ ⊥) → ¬ IsGLB S ⊥ := by
+  refine ⟨⟨((true, false) : Bool × Bool), ((false, true) : Bool × Bool), ?_, ?_⟩,
+    ⟨WithBot.bot_lt_coe _, fun c hc1 hc2 => ?_⟩, fun S hS h => ?_⟩
+  · rw [WithBot.coe_le_coe]; decide
+  · rw [WithBot.coe_le_coe]; decide
+  · induction c using WithBot.recBotCoe with
+    | bot => exact lt_irrefl _ hc1
+    | coe d => exact not_lt_bot (WithBot.coe_lt_coe.1 hc2)
+  · have hlb : ((⊥ : Bool × Bool) : WithBot (Bool × Bool)) ∈ lowerBounds S := by
+      intro x hx
+      induction x using WithBot.recBotCoe with
+      | bot => exact absurd rfl (hS _ hx)
+      | coe d => exact WithBot.coe_le_coe.2 bot_le
+    exact WithBot.not_coe_le_bot _ (h.2 hlb)
 
 /-- `Statement:` CONTROL, ⊥ of `ℕ∞ᵒᵈ` alone has no first step under `supBotZPS`. -/
 theorem nInfDual_not_botHasFirstStep : ¬ @BotHasFirstStep NInfDual (supBotZPS NInfDual) := by
@@ -614,8 +634,7 @@ theorem n2Pow_strictAnti : StrictAnti n2Pow := by
       exact pow_lt_pow_right_of_lt_one₀ (by norm_num) (by norm_num) (by exact_mod_cast hab)
 
 /-- `Statement:` `ℕ∞ᵒᵈ ≃o N2`, sending `toDual n` to `2⁻¹ ^ n` and `toDual ⊤` (⊤ of `ℕ∞`) to 0 of
-`ℝ≥0` (`e2_toDual_coe`, `e2_toDual_top`). Mathlib sibling with the same target `ℕ∞ᵒᵈ`:
-`IsDiscreteValuationRing.idealOrderIsoENat` (the ideal side, ideal `(2 ^ n)` for norm `2⁻¹ ^ n`);
+`ℝ≥0` (`e2_toDual_coe`, `e2_toDual_top`). Mathlib's `IsDiscreteValuationRing.idealOrderIsoENat : Ideal R ≃o ℕ∞ᵒᵈ` ends where `e2` starts; composed they give `Ideal ℤ_[2] ≃o N2` (ideal `(2 ^ n)` for norm `2⁻¹ ^ n`);
 the value-group form: `Valuation.IsRankOneDiscrete.valueGroup₀_equiv_withZeroMulInt`. The valuation
 side, values in `ℕ ∪ {∞}` with `v(0) = ∞` and the nonzero ideals the chain `(p ^ m)`: A. V. Sutherland,
 MIT 18.782 Lecture 4 (Fall 2013), Def. 4.10 and Thm. 4.16, pp. 3-4; Stacks Project tags 00IE, 00IH. -/
@@ -3255,11 +3274,12 @@ theorem n2Gaps_above_finite {r : ℝ} (hr : 0 < r) : {n | ∃ y ∈ n2GapInt n, 
   linarith
 
 /-- `Statement:` at every `x : ℚ_[2]`, 0 of `ℚ_[2]` included (both sides ⊤ of `ℕ∞`), `cxQ2 x` is the
-    number of gaps of `n2Real` of length at least `‖x‖`.
+    number of gaps of `n2Real` of length at least `‖x‖`; for `x ≠ 0`, the geometric counting function
+    of the fractal string of gaps at `1/‖x‖` (see Dial.md § XIII prior art).
     `Reading:` on a line, discreteness read as span minus material holds (`spanGap_eq_zero_iff_interval`);
     complexity at 0 of `ℚ_[2]` counts the gaps, and the amount missing is a separate quantity
-    (`spanGap_scaled_n2Real`), tied to the count by a logarithm only on a fixed-ratio ladder
-    (`ladder_count_eq_log`, the control `harm_no_log_law`). -/
+    (`spanGap_scaled_n2Real`), tied to the count by a logarithm exactly when positive summable gaps form a
+    fixed-ratio ladder (`log_law_iff_ladder`; the control `harm_no_log_law`). -/
 theorem cxQ2_eq_gap_count (x : ℚ_[2]) :
     cxQ2 x = {n : ℕ | ‖x‖ ≤ (1 / 2 : ℝ) ^ (n + 1)}.encard := by
   by_cases h0 : x = 0
@@ -3352,7 +3372,7 @@ theorem haar_eq_ediam_ball_Z2 (n : ℕ) :
 /-- `Statement:` the total length of the gaps from index `k` on. -/
 noncomputable def gapRemaining (ℓ : ℕ → ℝ) (k : ℕ) : ℝ := ∑' j, ℓ (j + k)
 
-/-- `Statement:` the number of gaps of length at least `r`. -/
+/-- `Statement:` the number of gaps of length at least `r`; for `r > 0`, the geometric counting function at `1/r` (Dial.md § XIII prior art). -/
 noncomputable def gapCount (ℓ : ℕ → ℝ) (r : ℝ) : ℕ∞ := {n : ℕ | r ≤ ℓ n}.encard
 
 /-- `Statement:` the fixed-ratio ladder: gap `n` has length `t · (1/2)^(n+1)` (`n2Real` at `t = 1`). -/
@@ -3397,13 +3417,101 @@ theorem logb_inv_gapRemaining_ladder {t : ℝ} (ht : 0 < t) (k : ℕ) :
   ring
 
 /-- `Statement:` on the ladder scaled by `t > 0`, at every level `k`,
-    count = `log₂ (1 / remaining) + log₂ t`. One way: a fixed ratio gives the log law; the converse
-    is not claimed. -/
+    count = `log₂ (1 / remaining) + log₂ t`. The converse, for positive summable gaps:
+    `log_law_iff_ladder`. -/
 theorem ladder_count_eq_log {t : ℝ} (ht : 0 < t) (k : ℕ) :
     ((gapCount (gapLadder t) (gapRemaining (gapLadder t) k)).toNat : ℝ)
       = Real.logb 2 (1 / gapRemaining (gapLadder t) k) + Real.logb 2 t := by
   rw [gapCount_remaining_ladder ht, logb_inv_gapRemaining_ladder ht]
   simp
+
+/-- `Statement:` for gaps `ℓ` with every `ℓ n > 0` and `ℓ` summable, some constant `c` gives
+    count = `log₂ (1 / remaining) + c` at every level iff `ℓ = gapLadder t` for some `t > 0`. No
+    monotonicity is assumed. -/
+theorem log_law_iff_ladder {ℓ : ℕ → ℝ} (hp : ∀ n, 0 < ℓ n) (hs : Summable ℓ) :
+    (∃ c : ℝ, ∀ k : ℕ, ((gapCount ℓ (gapRemaining ℓ k)).toNat : ℝ)
+        = Real.logb 2 (1 / gapRemaining ℓ k) + c) ↔ ∃ t : ℝ, 0 < t ∧ ℓ = gapLadder t := by
+  refine ⟨fun ⟨c, hc⟩ => ?_, fun ⟨t, ht, h⟩ => ⟨Real.logb 2 t, fun k => h ▸ ladder_count_eq_log ht k⟩⟩
+  set R := gapRemaining ℓ with hR
+  have hRpos : ∀ k, 0 < R k := fun k =>
+    ((summable_nat_add_iff k).2 hs).tsum_pos (fun _ => (hp _).le) 0 (hp _)
+  have hRsucc : ∀ k, R k = ℓ k + R (k + 1) := by
+    intro k
+    simp only [hR, gapRemaining]
+    rw [((summable_nat_add_iff k).2 hs).tsum_eq_zero_add, zero_add]
+    simp only [add_right_comm _ 1 k, add_assoc]
+  have hRlt : ∀ k, R (k + 1) < R k := fun k => by have := hRsucc k; have := hp k; linarith
+  have hanti : Antitone R := antitone_nat_of_succ_le fun k => (hRlt k).le
+  have hℓlt : ∀ n, ℓ n < R n := fun n => by have := hRsucc n; have := hRpos (n + 1); linarith
+  set N : ℕ → ℕ := fun k => (gapCount ℓ (R k)).toNat with hN
+  have hle : ∀ k, N k ≤ k := by
+    intro k
+    have hsub : {n : ℕ | R k ≤ ℓ n} ⊆ ((Finset.range k : Finset ℕ) : Set ℕ) := by
+      intro n hn
+      simp only [mem_ofPred_eq] at hn
+      simp only [Finset.coe_range, mem_Iio]
+      by_contra h
+      have := hanti (not_lt.1 h)
+      have := hℓlt n
+      linarith
+    have h1 : gapCount ℓ (R k) ≤ k := by
+      unfold gapCount
+      calc {n : ℕ | R k ≤ ℓ n}.encard ≤ ((Finset.range k : Finset ℕ) : Set ℕ).encard :=
+            Set.encard_le_encard hsub
+        _ = k := by rw [encard_coe_eq_coe_finsetCard, Finset.card_range]
+    exact ENat.toNat_le_of_le_natCast h1
+  have hlog : ∀ k, (N k : ℝ) = c - Real.logb 2 (R k) := by
+    intro k; have := hc k; rw [one_div, Real.logb_inv] at this; simp only [hN]; linarith
+  have hmono : ∀ k, N k < N (k + 1) := by
+    intro k
+    have h := Real.logb_lt_logb (by norm_num : (1 : ℝ) < 2) (hRpos (k + 1)) (hRlt k)
+    have := hlog k; have := hlog (k + 1)
+    exact_mod_cast (show (N k : ℝ) < N (k + 1) by linarith)
+  have hge : ∀ k, k ≤ N k := by
+    intro k; induction k with
+    | zero => exact Nat.zero_le _
+    | succ k ih => have := hmono k; omega
+  set t : ℝ := (2 : ℝ) ^ c with ht
+  have hRk : ∀ k, R k = t * (1 / 2 : ℝ) ^ k := by
+    intro k
+    have h := hlog k
+    rw [le_antisymm (hle k) (hge k)] at h
+    have hl : Real.logb 2 (R k) = c - k := by linarith
+    rw [← Real.rpow_logb (by norm_num : (0 : ℝ) < 2) (by norm_num) (hRpos k), hl,
+      Real.rpow_sub (by norm_num : (0 : ℝ) < 2), Real.rpow_natCast, ht,
+      one_div_pow, div_eq_mul_one_div]
+  refine ⟨t, by positivity, funext fun n => ?_⟩
+  have h := hRsucc n
+  rw [hRk n, hRk (n + 1)] at h
+  unfold gapLadder
+  rw [pow_succ] at h ⊢
+  linarith
+
+-- Statement: CONTROL, summability is load-bearing in `log_law_iff_ladder`: the constant gaps `1` (not
+-- summable, so `gapRemaining` is Lean's junk 0) satisfy the log law with `c = 0` and are no ladder.
+example : (∃ c : ℝ, ∀ k : ℕ, ((gapCount (fun _ => (1 : ℝ)) (gapRemaining (fun _ => 1) k)).toNat : ℝ)
+    = Real.logb 2 (1 / gapRemaining (fun _ => (1 : ℝ)) k) + c) ∧
+    ¬ ∃ t : ℝ, 0 < t ∧ (fun _ => (1 : ℝ)) = gapLadder t := by
+  refine ⟨⟨0, fun k => ?_⟩, ?_⟩
+  · have h0 : gapRemaining (fun _ => (1 : ℝ)) k = 0 := by
+      simp [gapRemaining, tsum_const]
+    rw [h0]; simp [gapCount]
+  · rintro ⟨t, _, h⟩
+    have h0 := congrFun h 0; have h1 := congrFun h 1
+    simp only [gapLadder] at h0 h1
+    norm_num at h0 h1; linarith
+
+-- Statement: CONTROL, positivity is load-bearing in `log_law_iff_ladder`: the all-zero gaps are summable,
+-- satisfy the log law with `c = 0`, and are no ladder with `t > 0`.
+example : (∃ c : ℝ, ∀ k : ℕ, ((gapCount (fun _ => (0 : ℝ)) (gapRemaining (fun _ => 0) k)).toNat : ℝ)
+    = Real.logb 2 (1 / gapRemaining (fun _ => (0 : ℝ)) k) + c) ∧ Summable (fun _ : ℕ => (0 : ℝ)) ∧
+    ¬ ∃ t : ℝ, 0 < t ∧ (fun _ => (0 : ℝ)) = gapLadder t := by
+  refine ⟨⟨0, fun k => by simp [gapCount, gapRemaining]⟩, summable_zero, ?_⟩
+  rintro ⟨t, ht, h⟩
+  have h0 := congrFun h 0
+  simp only [gapLadder] at h0
+  have : 0 < t * (1 / 2 : ℝ) ^ (0 + 1) := by positivity
+  linarith
 
 /-- `Statement:` for `t > 0`, the count against a threshold scaled by `t` is unchanged. -/
 theorem gapCount_ladder_scale {t : ℝ} (ht : 0 < t) (r : ℝ) :
@@ -4197,6 +4305,7 @@ open ZeroParadox
 #print axioms gapCount_remaining_ladder
 #print axioms logb_inv_gapRemaining_ladder
 #print axioms ladder_count_eq_log
+#print axioms log_law_iff_ladder
 #print axioms gapCount_ladder_scale
 #print axioms cxQ2_eq_gapCount
 #print axioms cxQ2_two_pow_eq_log

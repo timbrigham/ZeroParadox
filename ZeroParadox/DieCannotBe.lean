@@ -5458,7 +5458,7 @@ example : ¬ ZeroParadox.Motion.unitMotion.Loop := fun ⟨_, _, _, _, hne, _⟩ 
 #check @ZeroParadox.complex_four_homeoIso      -- Statement: on `OnePoint ℂ`, any two of `c`, `conj c`, `c⁻¹`, `(conj c)⁻¹` give `HomeoIso`-related limit motions
 #check @ZeroParadox.conj_swaps_poles           -- Statement: every homeomorphism conjugating an expanding multiplier to a contracting one on `OnePoint K` exchanges `0` of `K` and `∞`
 #check @ZeroParadox.padic_two_poles            -- Statement: `×2` on `OnePoint ℚ_[2]`: `0` attracting, `∞` repelling; on `OnePoint ℂ` the roles are exchanged (`complex_two_poles`)
-#check @ZeroParadox.dTwist_step_no_arc         -- Statement: `dTwist 3` sends `2` to `6` in `ℚ_[2]`, chord `dist 2 6 = 1/4`, and no continuous `γ : ℝ → ℚ_[2]` joins them; on ℂ, `bendTwist_chord_lt_arc`: the chord from `z` to its twist is shorter than the arc of radius `‖z‖`
+#check @ZeroParadox.dTwist_step_no_arc         -- Statement: `dTwist 3` sends `2` to `6` in `ℚ_[2]`, chord `dist 2 6 = 1/4`, and no continuous `γ : ℝ → ℚ_[2]` joins them; on ℂ, `bendTwist_chord_lt_arc`: for `z ≠ 0` and a nonzero twist angle `α log ‖z‖`, the chord from `z` to its twist is shorter than `‖z‖ · |α log ‖z‖|` (arc length proved on the unit circle only, `arc_unitCirc`)
 
 /-! ### § XXXIX. The givens as predicates on a motion, per chart -/
 -- Reading: CARRIER — each given is a `Prop`, never a class field (all but `GConnected` and `GJoined`
