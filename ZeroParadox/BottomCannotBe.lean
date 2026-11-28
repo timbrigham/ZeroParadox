@@ -943,6 +943,9 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Statement: one way: on a densely ordered linear order with a least element that mass is 0 at every `p`;
 -- `W_not_firstStep` and `W_not_dense` show the converse fails.
 #check @ZeroParadox.dense_stepOff_mass_zero
+-- Statement: the mass of `stepOff` is 0 at `p = 0` on `Bool` (join `||`), where almost every tape never
+-- fires, and at `0 < p ≤ 1` on `NNReal` (join `max`), where almost every tape fires.
+#check @ZeroParadox.zero_mass_two_causes
 -- Statement: if ⊥ of `L` has a first step and the stage chances `q n` sum to ∞, then for
 -- `fadingTrials q hq`-almost every tape some `φ` makes the run `φ ∘ firedRun w hw` step off ⊥ of `L`
 -- to a cover. One way.
@@ -952,6 +955,11 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Statement: for `1 ≤ x`, `(x⁻¹).toNNReal = 0` iff `x = ⊤`; at `p = 0` the mean of `wait + 1` is ⊤ and
 -- almost every tape never fires; ⊥ of `ℕ → Bool` has wait ⊤ of `ℕ∞`.
 #check @ZeroParadox.wait_chart_top
+-- Statement: the mean of `wait` under `trials p hp` is `p⁻¹ - 1` in `ℝ≥0∞`, the geometric distribution's
+-- mean `(1 - p)/p`; ⊤ of `ℝ≥0∞` at `p = 0`.
+#check @ZeroParadox.lintegral_wait
+-- Statement: every `y : ℝ≥0∞`, ⊤ included, is the mean of `wait` at exactly one `p ≤ 1`.
+#check @ZeroParadox.wait_mean_existsUnique
 -- Statement: `unpack`, the columns of a tape along `Nat.pairEquiv`, is measure preserving from
 -- `trials p hp` to the product of countably many copies of `trials p hp`.
 #check @ZeroParadox.unpack_measurePreserving

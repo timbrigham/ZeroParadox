@@ -477263,7 +477263,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 5063,
+        "declarations": 5068,
         "files": 249
       },
       "entries": [
@@ -524200,6 +524200,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "41b58cdb-aef9-4400-8244-696e679cd230",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zero_mass_two_causes",
+            "short": "zero_mass_two_causes"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zero_mass_two_causes",
+            "short": "zero_mass_two_causes",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII (2026-11-27): mean of wait (failures before first firing, the geometric distribution's mean (1-p)/p) is p^-1 - 1 in ENNReal; injective and surjective onto [0, top] over p <= 1. § IV: stepOff mass 0 at p = 0 on Bool and at 0 < p on NNReal, with different runs underneath.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -643724,6 +643761,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e425f38e-6ff6-412a-b752-7ebe5bfc37e7",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_mean_surj",
+            "short": "wait_mean_surj"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_mean_surj",
+            "short": "wait_mean_surj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII (2026-11-27): mean of wait (failures before first firing, the geometric distribution's mean (1-p)/p) is p^-1 - 1 in ENNReal; injective and surjective onto [0, top] over p <= 1. § IV: stepOff mass 0 at p = 0 on Bool and at 0 < p on NNReal, with different runs underneath.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e43b0ff0-893c-4ad7-b1b7-07ba7ab78c79",
           "new": {
             "file": "ZeroParadox/Valuation/LocalTowers.lean",
@@ -648979,6 +649053,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ea82bda7-9589-419f-bf21-6615b4e5664e",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_mean_existsUnique",
+            "short": "wait_mean_existsUnique"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_mean_existsUnique",
+            "short": "wait_mean_existsUnique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII (2026-11-27): mean of wait (failures before first firing, the geometric distribution's mean (1-p)/p) is p^-1 - 1 in ENNReal; injective and surjective onto [0, top] over p <= 1. § IV: stepOff mass 0 at p = 0 on Bool and at 0 < p on NNReal, with different runs underneath.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ea95ba20-d9b2-41c1-9e5c-0bb1fb10a9e4",
           "new": {
             "file": "ZeroParadox/Valuation/TreeNotForced.lean",
@@ -649117,6 +649228,43 @@
             ]
           },
           "reason": "Land 2026-11-10 cells-joint, local-towers, interleave probes and the new one-way-flow results into ZeroParadox/Valuation (CellsJoint, Interleave, LocalTowers, OneWayFlow).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "eac138af-3165-4784-9dc8-3ac418c9690c",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_mean_inj",
+            "short": "wait_mean_inj"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wait_mean_inj",
+            "short": "wait_mean_inj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII (2026-11-27): mean of wait (failures before first firing, the geometric distribution's mean (1-p)/p) is p^-1 - 1 in ENNReal; injective and surjective onto [0, top] over p <= 1. § IV: stepOff mass 0 at p = 0 on Bool and at 0 < p on NNReal, with different runs underneath.",
           "verify": {
             "axioms": null,
             "sorry_free": null
@@ -659332,6 +659480,43 @@
             "role": []
           },
           "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": null
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f8dab3fa-a886-4ca9-839e-80358551332f",
+          "new": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lintegral_wait",
+            "short": "lintegral_wait"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Dial.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lintegral_wait",
+            "short": "lintegral_wait",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Dial.lean § VII (2026-11-27): mean of wait (failures before first firing, the geometric distribution's mean (1-p)/p) is p^-1 - 1 in ENNReal; injective and surjective onto [0, top] over p <= 1. § IV: stepOff mass 0 at p = 0 on Bool and at 0 < p on NNReal, with different runs underneath.",
           "verify": {
             "axioms": null,
             "sorry_free": null
