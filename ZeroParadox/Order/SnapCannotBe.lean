@@ -162,6 +162,10 @@ example (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
 #check @ZeroParadox.stepOff_ae_iff                    -- Statement: at `0 < p ≤ 1`, almost every tape is in `stepOff L` iff `BotHasFirstStep L`; both directions
 #check @ZeroParadox.linear_stepOff_mass_one_iff       -- Statement: on a linear order with a least element (join `max`), that mass is 1 iff the order has an atom (`IsAtom`, via `bot_covBy_iff`) and `p ≠ 0`
 #check @ZeroParadox.dense_stepOff_mass_zero           -- Statement: one way: densely ordered gives mass 0 at every `p`; CONTROL `W := WithTop (WithTop NNReal)` is not densely ordered (`W_not_dense`) and its ⊥ has no first step (`W_not_firstStep`), so the converse fails
+#check @ZeroParadox.zero_mass_two_causes              -- Statement: the mass of `stepOff` is 0 at `p = 0` on `Bool` (join `||`), where almost every tape never fires, and at `0 < p ≤ 1` on `NNReal` (join `max`), where almost every tape fires
+-- Reading: CARRIER, mass 0 alone does not tell the dial at 0 from ⊥ of the carrier having no first step.
+#check @ZeroParadox.lintegral_wait                    -- Statement: the mean of `wait` (stages before the first firing) under `trials p hp` is `p⁻¹ - 1` in `ℝ≥0∞`, the geometric distribution's mean `(1 - p)/p`; ⊤ of `ℝ≥0∞` at `p = 0`
+#check @ZeroParadox.wait_mean_existsUnique            -- Statement: every `y : ℝ≥0∞`, ⊤ included, is the mean of `wait` at exactly one `p ≤ 1` (`wait_mean_surj`, `wait_mean_inj`)
 #check @ZeroParadox.dial_pinned_faces                 -- Statement: if `binEntropy p > 0` (equivalently `0 < p < 1`, `dial_entropy_pos_iff`), "some stage fires" has mass 1 and every tape, ⊥ of `ℕ → Bool` among them, is in the support of `trials p hp` and null
 #check @ZeroParadox.fair_wait_offset                  -- Statement: under `fairTape`, the wait to the first disagreement with a tape `t` (`det_xorOffset_eq_ofNat_iff`) has the law of the wait from ⊥ of `ℕ → Bool`; `xorOffset_measurePreserving_iff`: for `p ≤ 1` and `t` not ⊥ of `ℕ → Bool`, `xorOffset t` preserves `trials p hp` only at `p = 1/2`
 -- Reading: CARRIER, the tower tape fed to the snap as a family indexed by chart, never a union

@@ -278,6 +278,18 @@ example : ∃ (φ : Bool → NNReal) (hw : ∃ k, (fun _ => true : ℕ → Bool)
   · simp [(firedRun_spec (fun _ => true) ⟨0, rfl⟩).1, (firedRun_spec (fun _ => true) ⟨0, rfl⟩).2 0]
 end NNRealC
 
+/-- `Statement:` the mass of `stepOff` is 0 in two settings with different runs: at `p = 0` on `Bool`
+(join `||`) almost every tape never fires; at `0 < p ≤ 1` on `NNReal` (join `max`) almost every tape
+fires. `Reading:` CARRIER, mass 0 alone does not tell the dial at 0 from ⊥ of the carrier having no first step. -/
+theorem zero_mass_two_causes (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
+    (trials 0 zero_le_one (@stepOff Bool boolOrZPS) = 0 ∧
+      ∀ᵐ w ∂(trials 0 zero_le_one), ¬ ∃ k, w k = true) ∧
+    (trials p hp (@stepOff NNReal nnrealMaxZPS) = 0 ∧
+      ∀ᵐ w ∂(trials p hp), ∃ k, w k = true) := by
+  refine ⟨⟨?_, never_fires_ae_zero _⟩, ⟨?_, ae_firesOnce p hp hp0⟩⟩
+  · rw [@stepOff_mass Bool boolOrZPS]; simp
+  · rw [@stepOff_mass NNReal nnrealMaxZPS]; simp [nnreal_not_botHasFirstStep]
+
 -- Statement: CONTROL, on `ℕ∞` (join `min`): the mass is 0 at every `p`.
 example (p : NNReal) (hp : p ≤ 1) : trials p hp (stepOff ℕ∞) = 0 := by
   rw [stepOff_of_not_firstStep natInf_not_botHasFirstStep]; simp
@@ -558,6 +570,59 @@ theorem wait_chart_top (x : ENNReal) (hx : 1 ≤ x) :
 example : trials 1 le_rfl (fires 0) = 1 ∧
     ∫⁻ w, (((waitENat (det w) : ℕ∞) : ENNReal) + 1) ∂(trials 1 le_rfl) = 1 :=
   ⟨by rw [trials_fires]; simp, by rw [lintegral_wait_succ]; simp⟩
+
+/-- `Statement:` the mean of `wait` (stages before the first firing) under `trials p hp` is `p⁻¹ - 1`
+in `ℝ≥0∞`, every `p ≤ 1`: the geometric distribution's mean, `(1 - p)/p`; ⊤ of `ℝ≥0∞` at `p = 0`. -/
+theorem lintegral_wait (p : NNReal) (hp : p ≤ 1) :
+    ∫⁻ w, ((waitENat (det w) : ℕ∞) : ENNReal) ∂(trials p hp) = (p : ENNReal)⁻¹ - 1 := by
+  have h := lintegral_wait_succ p hp
+  rw [lintegral_add_right _ measurable_const, lintegral_const, measure_univ, one_mul] at h
+  rw [← h, ENNReal.add_sub_cancel_right ENNReal.one_ne_top]
+
+/-- `Statement:` if the means of `wait` under `trials p hp` and `trials q hq` agree, `p = q`. -/
+theorem wait_mean_inj (p q : NNReal) (hp : p ≤ 1) (hq : q ≤ 1)
+    (h : ∫⁻ w, ((waitENat (det w) : ℕ∞) : ENNReal) ∂(trials p hp) =
+      ∫⁻ w, ((waitENat (det w) : ℕ∞) : ENNReal) ∂(trials q hq)) : p = q := by
+  rw [lintegral_wait, lintegral_wait] at h
+  have h1p : (1 : ENNReal) ≤ (p : ENNReal)⁻¹ := ENNReal.one_le_inv.2 (by exact_mod_cast hp)
+  have h1q : (1 : ENNReal) ≤ (q : ENNReal)⁻¹ := ENNReal.one_le_inv.2 (by exact_mod_cast hq)
+  have hinv : (p : ENNReal)⁻¹ = (q : ENNReal)⁻¹ := by
+    rw [← tsub_add_cancel_of_le h1p, ← tsub_add_cancel_of_le h1q, h]
+  exact_mod_cast inv_inj.1 hinv
+
+/-- `Statement:` every `y : ℝ≥0∞`, ⊤ included, is the mean of `wait` under `trials p hp` for some `p ≤ 1`. -/
+theorem wait_mean_surj (y : ENNReal) :
+    ∃ (p : NNReal) (hp : p ≤ 1),
+      ∫⁻ w, ((waitENat (det w) : ℕ∞) : ENNReal) ∂(trials p hp) = y := by
+  have h1 : (1 : ENNReal) ≤ y + 1 := le_add_self
+  have hne : (y + 1)⁻¹ ≠ ⊤ := ENNReal.inv_ne_top.2 (ne_of_gt (lt_of_lt_of_le zero_lt_one h1))
+  refine ⟨((y + 1)⁻¹).toNNReal, ?_, ?_⟩
+  · rw [← ENNReal.coe_le_coe, ENNReal.coe_toNNReal hne]
+    simp
+  · rw [lintegral_wait, ENNReal.coe_toNNReal hne, inv_inv,
+      ENNReal.add_sub_cancel_right ENNReal.one_ne_top]
+
+/-- `Statement:` every `y : ℝ≥0∞` is the mean of `wait` at exactly one `p ≤ 1`
+(`wait_mean_surj`, `wait_mean_inj`). -/
+theorem wait_mean_existsUnique (y : ENNReal) :
+    ∃! p : NNReal, ∃ hp : p ≤ 1,
+      ∫⁻ w, ((waitENat (det w) : ℕ∞) : ENNReal) ∂(trials p hp) = y := by
+  obtain ⟨p, hp, h⟩ := wait_mean_surj y
+  exact ⟨p, ⟨hp, h⟩, fun q ⟨hq, hq'⟩ => wait_mean_inj q p hq hp (hq'.trans h.symm)⟩
+
+-- Statement: CONTROL `p = 1`: the mean of `wait` is 0.
+example : ∫⁻ w, ((waitENat (det w) : ℕ∞) : ENNReal) ∂(trials 1 le_rfl) = 0 := by
+  rw [lintegral_wait]; simp
+-- Statement: CONTROL `p = 0`: the mean of `wait` is ⊤ of `ℝ≥0∞`.
+example (hp : (0 : NNReal) ≤ 1) :
+    ∫⁻ w, ((waitENat (det w) : ℕ∞) : ENNReal) ∂(trials 0 hp) = ⊤ := by
+  rw [lintegral_wait]; simp
+-- Statement: CONTROL `p = 1/2`: the mean of `wait` is 1.
+example (hp : (1 / 2 : NNReal) ≤ 1) :
+    ∫⁻ w, ((waitENat (det w) : ℕ∞) : ENNReal) ∂(trials (1 / 2) hp) = 1 := by
+  rw [lintegral_wait]
+  norm_num
+  exact ENNReal.sub_eq_of_eq_add ENNReal.one_ne_top one_add_one_eq_two.symm
 
 /-! ### § VIII. Packing: a tape of tapes at the same chance -/
 
@@ -2668,6 +2733,7 @@ open ZeroParadox
 #print axioms stepOff_ae_iff
 #print axioms linear_stepOff_mass_one_iff
 #print axioms dense_stepOff_mass_zero
+#print axioms zero_mass_two_causes
 #print axioms W
 #print axioms W_not_firstStep
 #print axioms W_not_dense
@@ -2681,6 +2747,10 @@ open ZeroParadox
 #print axioms lintegral_wait_succ
 #print axioms lintegral_wait_succ_inv
 #print axioms wait_chart_top
+#print axioms lintegral_wait
+#print axioms wait_mean_inj
+#print axioms wait_mean_surj
+#print axioms wait_mean_existsUnique
 #print axioms unpack
 #print axioms unpack_apply
 #print axioms unpack_measurePreserving
