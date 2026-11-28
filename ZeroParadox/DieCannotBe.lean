@@ -4622,6 +4622,7 @@ example :
 #check @ZeroParadox.shr8_not_lumps               -- Statement: CONTROL, the right shift on `ZMod 8` lumps along `zoom 2` to no kernel on `ZMod 4`
 #check @ZeroParadox.zoom_last_step_erases_arrow  -- Statement: the rotation on `ZMod 4` is reversible w.r.t. no probability measure and lumps along `zoom 1` to the flip on `ZMod 2`, reversible w.r.t. the uniform law
 #check @ZeroParadox.parity4_eq_zoom              -- Statement: on `Fin 4 = ZMod 4`, `parity4 x` is `decide (zoom 1 x = 1)`
+#check @ZeroParadox.log2Band_two_charts          -- Statement: for every `k : ℤ`, the nonzero absolute values of ℝ fill the band `[2 ^ k, 2 ^ (k + 1))` of `Int.log 2` (`ZeroParadox/Information/Dial.lean` § XV; Mathlib's Galois coinsertion `Int.zpowLogGi`) and meet its interior, while the nonzero norms of `ℚ_[2]` meet it exactly at `2 ^ k` (`ZeroParadox/Givens.lean`)
 #check @ZeroParadox.absorb4_not_sigma_reversible -- Statement: no involution reverses the steps of `Motion.ofFun absorb4` (§ XIV's shape), while its kernel is reversible w.r.t. every measure on its fixed points (`absorb4_reversible`)
 #check @ZeroParadox.Motion.dom_factor            -- Statement: if the kernel of `obs` is UP-compatible, UP-definedness is `D ∘ obs` for some `D`
 #check @ZeroParadox.Motion.registeredDecidable_of_factor -- Statement: if UP-definedness is `D ∘ obs` and `D` is decided at every point, registration is decided

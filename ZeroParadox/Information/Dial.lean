@@ -31,7 +31,7 @@ analog and a digital value
 Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires within `n`
 stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`, the step-off mass, `Bool × ℕ∞ᵒᵈ` and its 2-adic norm form `Bool × N2`; § V-VI: schedules,
 the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations;
-§ XI: a Markov kernel on the die; § XII: lumping, reversibility under coarse-graining; § XIII: `cxQ2` as a gap count; § XIV: zoom-out on the 2-adic tower. -/
+§ XI: a Markov kernel on the die; § XII: lumping, reversibility under coarse-graining; § XIII: `cxQ2` as a gap count; § XIV: zoom-out on the 2-adic tower; § XV: the bands of `Int.log 2`. -/
 
 set_option maxHeartbeats 400000
 
@@ -3777,6 +3777,151 @@ theorem zoom_comp_toZModPow (n : ℕ) (x : ℤ_[2]) :
 
 end ZoomTower
 
+/-! ### § XV. The bands of `Int.log 2`: the 2-adic norms on their left ends, and the gap count
+
+`Int.log 2` (floor of `log₂`) is the upper adjoint of Mathlib's Galois coinsertion `Int.zpowLogGi`,
+`k ↦ 2 ^ k` the lower; its fibres over the positive reals are the bands `log2Band k`. -/
+
+section Log2Band
+
+open Set OrderDual
+
+/-- `Statement:` the band `[2 ^ k, 2 ^ (k + 1))` in ℝ. -/
+noncomputable def log2Band (k : ℤ) : Set ℝ := Ico ((2 : ℝ) ^ k) ((2 : ℝ) ^ (k + 1))
+
+/-- `Statement:` for `0 < x`, `x ∈ log2Band k` iff `Int.log 2 x = k`; both directions. -/
+theorem mem_log2Band_iff {x : ℝ} (hx : 0 < x) (k : ℤ) : x ∈ log2Band k ↔ Int.log 2 x = k := by
+  have h1 := Int.zpow_le_iff_le_log (R := ℝ) (b := 2) (by norm_num) (x := k) hx
+  have h2 := Int.lt_zpow_iff_log_lt (R := ℝ) (b := 2) (by norm_num) (x := k + 1) hx
+  simp only [Nat.cast_ofNat] at h1 h2
+  rw [log2Band, mem_Ico, h1, h2]; omega
+
+/-- `Statement:` every positive real lies in exactly one band. -/
+theorem log2Band_existsUnique {x : ℝ} (hx : 0 < x) : ∃! k, x ∈ log2Band k :=
+  ⟨Int.log 2 x, (mem_log2Band_iff hx _).2 rfl, fun k hk => ((mem_log2Band_iff hx k).1 hk).symm⟩
+
+/-- `Statement:` the bands are pairwise disjoint. -/
+theorem log2Band_pairwise_disjoint : Pairwise (Function.onFun Disjoint log2Band) := by
+  intro j k hjk
+  rw [Function.onFun, Set.disjoint_left]
+  intro x hj hk
+  have hx : 0 < x := lt_of_lt_of_le (zpow_pos (by norm_num) j) hj.1
+  exact hjk (((mem_log2Band_iff hx j).1 hj).symm.trans ((mem_log2Band_iff hx k).1 hk))
+
+/-- `Statement:` the bands cover exactly the positive reals. -/
+theorem iUnion_log2Band : (⋃ k, log2Band k) = Ioi 0 := by
+  ext x; simp only [mem_iUnion, mem_Ioi]
+  constructor
+  · rintro ⟨k, hk⟩; exact lt_of_lt_of_le (zpow_pos (by norm_num) k) hk.1
+  · intro hx; exact ⟨Int.log 2 x, (mem_log2Band_iff hx _).2 rfl⟩
+
+/-- `Statement:` band `k` has length `2 ^ k`, its left end, and band `k - 1` has half the length of
+band `k`; the ratio of the ends is 2 at every `k`. -/
+theorem log2Band_length (k : ℤ) :
+    (2 : ℝ) ^ (k + 1) - 2 ^ k = 2 ^ k ∧
+      (2 : ℝ) ^ k - 2 ^ (k - 1) = ((2 : ℝ) ^ (k + 1) - 2 ^ k) / 2 := by
+  have h2 : (2 : ℝ) ≠ 0 := by norm_num
+  refine ⟨by rw [zpow_add_one₀ h2]; ring, ?_⟩
+  rw [zpow_add_one₀ h2, zpow_sub_one₀ h2]; ring
+
+/-- `Statement:` for nonzero `x : ℚ_[2]`, `Int.log 2 ‖x‖ = -x.valuation` and `‖x‖ = 2 ^ Int.log 2 ‖x‖`,
+the left end of its band (Mathlib `Padic.norm_eq_zpow_neg_valuation`). -/
+theorem q2_log2_norm {x : ℚ_[2]} (hx : x ≠ 0) :
+    Int.log 2 ‖x‖ = -x.valuation ∧ ‖x‖ = (2 : ℝ) ^ Int.log 2 ‖x‖ := by
+  have hn := Padic.norm_eq_zpow_neg_valuation hx
+  have hl : Int.log 2 ‖x‖ = -x.valuation := by
+    rw [hn]; exact Int.log_zpow (R := ℝ) (b := 2) (by norm_num) _
+  refine ⟨hl, ?_⟩
+  rw [hl, hn]; norm_num
+
+/-- `Statement:` for nonzero `x : ℤ_[2]`, `Int.log 2 ‖x‖ = -x.valuation` and
+`q2Val x = (-Int.log 2 ‖x‖).toNat`. -/
+theorem z2_log2_norm {x : ℤ_[2]} (hx : x ≠ 0) :
+    Int.log 2 ‖x‖ = -(x.valuation : ℤ) ∧ q2Val x = ((-Int.log 2 ‖x‖).toNat : ℕ∞) := by
+  have hl : Int.log 2 ‖x‖ = -(x.valuation : ℤ) := by
+    rw [PadicInt.norm_eq_zpow_neg_valuation hx]
+    exact Int.log_zpow (R := ℝ) (b := 2) (by norm_num) _
+  refine ⟨hl, ?_⟩
+  rw [hl, neg_neg, Int.toNat_natCast]
+  simp [q2Val, hx]
+
+/-- `Statement:` `Int.log 2` of `e2 (toDual n)`, read in ℝ, is `-n` for every `n : ℕ`. -/
+theorem log2_e2_toDual_coe (n : ℕ) :
+    Int.log 2 ((e2 (toDual (n : ℕ∞)) : NNReal) : ℝ) = -(n : ℤ) := by
+  rw [e2_toDual_coe]
+  have h : (((2⁻¹ : NNReal) ^ n : NNReal) : ℝ) = ((2 : ℕ) : ℝ) ^ (-(n : ℤ)) := by
+    push_cast; rw [zpow_neg, zpow_natCast, inv_pow]
+  simp only
+  rw [h]; exact Int.log_zpow (R := ℝ) (b := 2) (by norm_num) _
+
+/-- `Statement:` no norm of `ℚ_[2]`, 0 of `ℚ_[2]` included, lies in the open band
+`(2 ^ k, 2 ^ (k + 1))`. -/
+theorem q2_norm_not_mem_Ioo (x : ℚ_[2]) (k : ℤ) :
+    ‖x‖ ∉ Ioo ((2 : ℝ) ^ k) ((2 : ℝ) ^ (k + 1)) := by
+  rintro ⟨h1, h2⟩
+  have hx : x ≠ 0 := by
+    rintro rfl; rw [norm_zero] at h1; exact absurd h1 (not_lt.2 (zpow_pos (by norm_num) k).le)
+  have hk : Int.log 2 ‖x‖ = k := (mem_log2Band_iff (norm_pos_iff.2 hx) k).1 ⟨h1.le, h2⟩
+  have := (q2_log2_norm hx).2
+  rw [hk] at this; exact absurd this h1.ne'
+
+/-- `Statement:` the same for the norms of ℤ_[2] (`PadicInt.norm_def`). -/
+theorem z2_norm_not_mem_Ioo (x : ℤ_[2]) (k : ℤ) :
+    ‖x‖ ∉ Ioo ((2 : ℝ) ^ k) ((2 : ℝ) ^ (k + 1)) := by
+  rw [PadicInt.norm_def]; exact q2_norm_not_mem_Ioo _ k
+
+/-- `Statement:` the gap `n2GapInt n` of § XIII is the band `log2Band (-(n + 1))` without its left end. -/
+theorem n2GapInt_eq_log2Band (n : ℕ) :
+    n2GapInt n = log2Band (-((n : ℤ) + 1)) \ {(2 : ℝ) ^ (-((n : ℤ) + 1))} := by
+  rw [log2Band, Ico_sdiff_left, n2GapInt, n2_half_pow_eq_zpow, n2_half_pow_eq_zpow,
+    show -((n : ℤ) + 1) + 1 = -(n : ℤ) by ring]
+  push_cast; rfl
+
+/-- `Statement:` for nonzero `x : ℚ_[2]`, `cxQ2 x` is the number of band indices `k` with
+`Int.log 2 ‖x‖ ≤ k < 0`; through `n2GapInt_eq_log2Band`, the gaps counted by `cxQ2_eq_gap_count`. -/
+theorem cxQ2_eq_log2Band_count {x : ℚ_[2]} (hx : x ≠ 0) :
+    cxQ2 x = (Ico (Int.log 2 ‖x‖) 0).encard := by
+  rw [← Finset.coe_Ico, encard_coe_eq_coe_finsetCard, Int.card_Ico, (q2_log2_norm hx).1]
+  simp [cxQ2, hx]
+
+/-- `Statement:` `WithBot ℤ` has no atom: nothing covers its ⊥. -/
+theorem withBotInt_no_atom : ¬ ∃ a : WithBot ℤ, IsAtom a := by
+  rintro ⟨a, ha⟩
+  induction a using WithBot.recBotCoe with
+  | bot => exact ha.1 rfl
+  | coe k =>
+    have h := ha.2 ((k - 1 : ℤ) : WithBot ℤ) (WithBot.coe_lt_coe.2 (by omega))
+    exact WithBot.coe_ne_bot h
+
+/-- `Statement:` `Int.log 2` on the positive reals, sending every `x ≤ 0` to ⊥ of `WithBot ℤ`. -/
+noncomputable def log2WithBot (x : ℝ) : WithBot ℤ := if 0 < x then (Int.log 2 x : WithBot ℤ) else ⊥
+
+/-- `Statement:` `log2WithBot` is monotone. -/
+theorem log2WithBot_mono : Monotone log2WithBot := by
+  intro x y hxy
+  unfold log2WithBot
+  by_cases hx : 0 < x
+  · have hy : 0 < y := lt_of_lt_of_le hx hxy
+    simp only [hx, hy, ite_true]
+    exact WithBot.coe_le_coe.2 (Int.log_mono_right hx hxy)
+  · simp only [hx, ite_false]; exact bot_le
+
+/-- `Statement:` on `WithBot ℤ`, the target of `log2WithBot` (join `max`), each `k` is covered by
+`k + 1`, and the mass of `stepOff` is 0 at every `p` (`withBotInt_no_atom`). -/
+theorem log2Chart_stepOff_mass_zero (p : NNReal) (hp : p ≤ 1) :
+    (∀ k : ℤ, (k : WithBot ℤ) ⋖ ((k + 1 : ℤ) : WithBot ℤ)) ∧
+      trials p hp (@stepOff (WithBot ℤ) (linearMaxZPS (WithBot ℤ) ⊥ (fun _ => bot_le))) = 0 := by
+  classical
+  refine ⟨fun k => WithBot.coe_covBy_coe.2 (Order.covBy_add_one k), ?_⟩
+  have h := (linear_stepOff_mass_one_iff (α := WithBot ℤ) p hp).not.2
+    (fun ⟨ha, _⟩ => withBotInt_no_atom ha)
+  rw [stepOff_mass] at h ⊢
+  split_ifs with hc
+  · simp [hc] at h
+  · rfl
+
+end Log2Band
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -4092,4 +4237,21 @@ open ZeroParadox
 #print axioms toZModPow_measurable
 #print axioms padic_doubling_lumps
 #print axioms zoom_comp_toZModPow
+#print axioms log2Band
+#print axioms mem_log2Band_iff
+#print axioms log2Band_existsUnique
+#print axioms log2Band_pairwise_disjoint
+#print axioms iUnion_log2Band
+#print axioms log2Band_length
+#print axioms q2_log2_norm
+#print axioms z2_log2_norm
+#print axioms log2_e2_toDual_coe
+#print axioms q2_norm_not_mem_Ioo
+#print axioms z2_norm_not_mem_Ioo
+#print axioms n2GapInt_eq_log2Band
+#print axioms cxQ2_eq_log2Band_count
+#print axioms withBotInt_no_atom
+#print axioms log2WithBot
+#print axioms log2WithBot_mono
+#print axioms log2Chart_stepOff_mass_zero
 end PurityCheck

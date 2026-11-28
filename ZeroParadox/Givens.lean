@@ -353,6 +353,64 @@ theorem real_norm_image : (fun x : ℝ => |x|) '' {x | x ≠ 0} = Set.Ioi 0 := b
 theorem real_norm_dense {a b : ℝ} (ha : 0 < a) (hab : a < b) : ∃ x : ℝ, a < |x| ∧ |x| < b :=
   ⟨(a + b) / 2, by rw [abs_of_pos (by linarith)]; constructor <;> linarith⟩
 
+/-- `Statement:` at nonzero `x : ℝ`, `|x|` lies in the band `log2Band (realExpView x)`
+(`ZeroParadox/Information/Dial.lean` § XV). -/
+theorem realExpView_mem_log2Band {x : ℝ} (hx : x ≠ 0) :
+    |x| ∈ log2Band (realExpView (OnePoint.some x)) :=
+  (mem_log2Band_iff (abs_pos.2 hx) _).2 rfl
+
+/-- `Statement:` for every `k : ℤ`, the nonzero absolute values of ℝ fill `log2Band k` and meet its
+interior, while the nonzero norms of `ℚ_[2]` meet `log2Band k` exactly at its left end `2 ^ k`.
+`Reading:` CARRIER, the keyway: the slots are the band indices, a key is a positive real, its
+tolerance the band `Int.log 2` sends to one slot, one doubling wide (constant ratio of the ends,
+length halving one band down, `log2Band_length`). The real chart fills each band; the 2-adic chart
+sits on the rungs `2 ^ k` with zero tolerance (`q2_log2_norm`). Rounding makes the run discrete
+(`real_dbl_GDiscrete_expView`) and creates no first step off ⊥ of `WithBot ℤ`
+(`log2Chart_stepOff_mass_zero`). -/
+theorem log2Band_two_charts (k : ℤ) :
+    log2Band k ⊆ (fun x : ℝ => |x|) '' {x | x ≠ 0} ∧
+      (∃ x : ℝ, |x| ∈ Set.Ioo ((2 : ℝ) ^ k) ((2 : ℝ) ^ (k + 1))) ∧
+      (fun x : ℚ_[2] => ‖x‖) '' {x | x ≠ 0} ∩ log2Band k = {(2 : ℝ) ^ k} := by
+  have hk : (0 : ℝ) < 2 ^ k := zpow_pos (by norm_num) k
+  have hlt : (2 : ℝ) ^ k < 2 ^ (k + 1) := by
+    have := (log2Band_length k).1; linarith
+  refine ⟨?_, ?_, ?_⟩
+  · rw [real_norm_image]; intro y hy; exact lt_of_lt_of_le hk hy.1
+  · obtain ⟨x, h1, h2⟩ := real_norm_dense hk hlt; exact ⟨x, h1, h2⟩
+  · ext r
+    simp only [Set.mem_inter_iff, Set.mem_singleton_iff]
+    constructor
+    · rintro ⟨⟨x, hx, rfl⟩, hb⟩
+      by_contra hne
+      exact q2_norm_not_mem_Ioo x k ⟨lt_of_le_of_ne hb.1 (Ne.symm hne), hb.2⟩
+    · rintro rfl
+      refine ⟨?_, le_refl _, hlt⟩
+      rw [q2_norm_image]; exact ⟨k, rfl⟩
+
+/-- `Statement:` in ℝ, `2 ∈ closedBall 1 1` and `closedBall 1 1 ≠ closedBall 2 1`: not every point
+of a closed ball is a centre, as it is in an ultrametric space
+(Mathlib `IsUltrametricDist.closedBall_eq_of_mem`). -/
+theorem real_not_every_point_centre :
+    (2 : ℝ) ∈ Metric.closedBall (1 : ℝ) 1 ∧
+      Metric.closedBall (1 : ℝ) 1 ≠ Metric.closedBall (2 : ℝ) 1 := by
+  refine ⟨by rw [Metric.mem_closedBall, Real.dist_eq]; norm_num, fun h => ?_⟩
+  have h3 : (3 : ℝ) ∈ Metric.closedBall (2 : ℝ) 1 := by
+    rw [Metric.mem_closedBall, Real.dist_eq]; norm_num
+  rw [← h, Metric.mem_closedBall, Real.dist_eq] at h3; norm_num at h3
+
+/-- `Statement:` in ℝ, `3/2` is the one point equidistant from 1 and 2, the ends of `log2Band 0`; in an
+ultrametric space `dist a b ≤ max (dist a m) (dist m b)` for every `m` (Mathlib `dist_triangle_max`). -/
+theorem real_log2Band_has_middle (m : ℝ) : dist m 1 = dist m 2 ↔ m = 3 / 2 := by
+  rw [Real.dist_eq, Real.dist_eq]
+  constructor
+  · intro h
+    rcases le_or_gt 1 m with h1 | h1 <;> rcases le_or_gt 2 m with h2 | h2
+    · rw [abs_of_nonneg (by linarith), abs_of_nonneg (by linarith)] at h; linarith
+    · rw [abs_of_nonneg (by linarith), abs_of_neg (by linarith)] at h; linarith
+    · linarith
+    · rw [abs_of_neg (by linarith), abs_of_neg (by linarith)] at h; linarith
+  · rintro rfl; norm_num [abs_of_pos, abs_of_neg]
+
 /-- `Statement:` `MachinePhase` chart: `GDiscrete` holds in ZP-A's induced order. -/
 theorem machine_GDiscrete :
     GDiscrete machineJoinMotion (zpSemilatticeSup MachinePhase).toPreorder := by
@@ -1177,6 +1235,10 @@ open ZeroParadox
 #print axioms q2_norm_gap
 #print axioms real_norm_image
 #print axioms real_norm_dense
+#print axioms realExpView_mem_log2Band
+#print axioms log2Band_two_charts
+#print axioms real_not_every_point_centre
+#print axioms real_log2Band_has_middle
 #print axioms real_hlv_returnToStart
 #print axioms machine_GDiscrete
 #print axioms machine_GCoverAtLanding
