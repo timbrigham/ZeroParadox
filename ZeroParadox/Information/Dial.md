@@ -109,7 +109,7 @@ this file holds what was already in the corpus, the prior art, and the fences.
   before the first success) is `p⁻¹ - 1`, which is `(1 - p)/p` for `0 < p`: the textbook mean of the
   failures form of the geometric distribution (Wikipedia, "Geometric distribution", retrieved 2026-11-27:
   `E(Y) = (1 - p)/p` for `Y = X - 1`, `0 < p ≤ 1`; ProofWiki, "Expectation of Geometric
-  Distribution/Formulation 2", retrieved: pmf `p(1 - p)^k`, `E X = (1 - p)/p`). Outside Mathlib the mean
+  Distribution/Formulation 2", retrieved 2026-11-27: pmf `p(1 - p)^k`, `E X = (1 - p)/p`). Outside Mathlib the mean
   is stated in ℝ by TauCetiProject/TauCeti at commit b12bdfa, `integral_id_map_cast_geometricMeasure`
   (`∫ x, x ∂((geometricMeasure p).map Nat.cast) = (1 - p) / p` for every `p : unitInterval`), which gives 0
   at `p = 0` (`integral_id_map_cast_geometricMeasure_zero`, Mathlib's `geometricMeasure 0 = dirac 0`), and

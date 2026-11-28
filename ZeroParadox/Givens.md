@@ -89,7 +89,7 @@ Reading (the Engineer's Take in `ZeroParadox/Givens.lean`): AX-B1 is a chart cho
 being where we evaluate. Which carrier steps off its least element is a theorem, not a commitment. For
 every carrier, the step-off mass is 1 when the least element has a first step and the dial is nonzero,
 and 0 otherwise (`stepOff_mass`). The discrete chart is a choice of where to evaluate, not an
-assumption about the world. Once the carrier is chosen the outcome is fixed: Bool (join or) gives the
+assumption about the world. Once the carrier is chosen, the step-off mass as a function of the dial is fixed: Bool (join or) gives the
 switch, NNReal (join max) gives 0 at every dial (`two_charts_snap`). Whether the world steps off in the
 discrete chart is a separate question, not settled here: it sits with the dial setting `p` and the
 occurrence hypothesis `hocc` of `t_snap_given` (§ VI). Kept separate, on purpose: discreteness ALONG
