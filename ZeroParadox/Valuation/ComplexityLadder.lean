@@ -21,20 +21,20 @@ what I needed.
 
 ## Formal Overview (AI-assisted)
 
-The completeness-critic found the arity is the one un-captured degree of freedom (the binary-arity precondition, not AX-B1). Tim's reading: the
+The completeness-critic found the arity is the one un-captured degree of freedom (fixed at two by MP-1's minimality, not by AX-B1). Tim's reading: the
 arity being open **is** the original condition — "reference this with more and more complex sets of variables."
 This file makes that a theorem: the arity is the **variable-count** (independent distinctions at a node), and
 it is an **unbounded ladder**.
 
 `complexity_ladder n`: for every `n`, the bottom `∅` admits `n` **independent** successors — an injective
 family `Fin n → Set ℕ` (the singletons `{0}, …, {n-1}`), each `⊇ ∅`, pairwise `⊆`-incomparable. So a node can
-carry exactly `n` independent variables, for any `n`. `complexity_unbounded` is the ∀-form: there is **no
-ceiling** — arity `n+1` strictly exceeds arity `n`, forever.
+carry at least `n` independent variables, for any `n`. `complexity_unbounded` is `complexity_ladder` with the
+`∀ n` outside: there is **no ceiling**. Neither theorem compares rungs.
 
 **What this says.** The branching *width* (the arity) is the number of independent variables the object
 references at each step, and it is free and unbounded. This is the pivot's opening condition ("cover any
 complexity of variables using the self-reference shape") realized as a checkable ladder: the chain gives
-arbitrary *length* (axis 3), the arity gives arbitrary *width* (the free parameter). **The binary-arity precondition is the knob** —
+arbitrary *length* (axis 3), the arity gives arbitrary *width* (the free parameter). **MP-1 is the knob** —
 fixing the arity at two is choosing the minimal rung; the generic object supports every rung.
 
 **Honest fence.** This is arbitrary variable *width* — not universal framework-encoding. "Cover any complexity
@@ -45,7 +45,7 @@ closing, are untouched here). The ladder realizes the width condition without cr
 namespace ZeroParadox
 
 /-- **The complexity ladder.** For every `n`, the bottom `∅` admits `n` independent successors: an injective
-family `Fin n → Set ℕ` (the singletons), each above `∅`, pairwise incomparable. A node carries exactly `n`
+family `Fin n → Set ℕ` (the singletons), each above `∅`, pairwise incomparable. A node carries at least `n`
 independent variables, for any `n`. -/
 theorem complexity_ladder (n : ℕ) :
     ∃ f : Fin n → Set ℕ,
@@ -62,9 +62,9 @@ theorem complexity_ladder (n : ℕ) :
     have hmem : (i : ℕ) ∈ ({(j : ℕ)} : Set ℕ) := hsub hii
     exact hij (Fin.ext (Set.mem_singleton_iff.mp hmem))
 
-/-- **No ceiling on variable-complexity.** For every `n` the bottom admits `n` independent successors — the
-arity/width is unbounded, so the object references arbitrarily complex sets of variables. This is the pivot's
-opening condition, checked; the binary-arity precondition is the choice of the minimal rung. -/
+/-- **No ceiling on variable-complexity.** `complexity_ladder` itself: for every `n` the bottom admits at least
+`n` independent successors, so the width is unbounded; no two rungs are compared. This is the pivot's
+opening condition, checked; MP-1's minimality (exactly two outcomes) is the choice of the minimal rung. -/
 theorem complexity_unbounded :
     ∀ n : ℕ, ∃ f : Fin n → Set ℕ,
       Function.Injective f ∧

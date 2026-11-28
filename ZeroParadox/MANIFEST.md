@@ -299,7 +299,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/BranchingPerfect.lean` - Nonempty discrete levels: the branch space is perfect iff infinitely many levels branch
 - `ZeroParadox/Valuation/BranchingRequirement.lean` - A further requirement — the branching axis: branches are incomparable (the tower does not stack)
 - `ZeroParadox/Valuation/BranchingSnapChain.lean` - The single chain: branching → disconnectedness → the forbidden return
-- `ZeroParadox/Valuation/CantorPropertiesProbe.lean` - Completeness-critic, final pass: a shared node profile and ultrametric agreement; compactness assigned to the arity commitment
+- `ZeroParadox/Valuation/CantorPropertiesProbe.lean` - Completeness-critic, final pass: a shared node profile and ultrametric agreement; compactness assigned to MP-1
 - `ZeroParadox/Valuation/CellsJoint.lean` - Cells and covers at ⊥ of `End`: depth and starting location carried by one index
 - `ZeroParadox/Valuation/CompletenessCriticProbe.lean` - Completeness-critic probe: what property of the generic object do the four axes NOT capture?
 - `ZeroParadox/Valuation/ComplexityLadder.lean` - The complexity ladder: the arity is the variable-count, and it climbs without bound

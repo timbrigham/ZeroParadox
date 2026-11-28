@@ -100,7 +100,7 @@ example : letI : TopologicalSpace ({0} ∪ Set.Icc (1 : ℝ) 2 : Set ℝ) := Pre
 -- `Reading:` the implication runs from topology to order on every linear order with its order
 -- topology, and from order to topology only under completeness. On one such carrier a continuous
 -- passage (preconnected) and the snap (a first step) exclude each other. This supplies no first step
--- anywhere: AX-B1 stays a commitment.
+-- anywhere: AX-B1 stays a precondition (chart choice).
 -- `Reading:` CARRIER. ℚ₂ carries no linear order (`LT ℚ_[2]` does not synthesize, the `#check_failure` in
 -- `ZeroParadox/BottomCannotBe.lean` § ROLE), so these hypotheses are not met there; its no-path
 -- fact is total disconnectedness (`disconnectedness_forbids_path`,

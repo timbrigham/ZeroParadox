@@ -795,9 +795,9 @@ RULE     dependency order: **ZP-A** (lattice) → **ZP-B** (p-adic) → **ZP-C**
          `two_charts_snap`. Never call it "directly verifiable": the `decide` proof only checks
          the two states are distinct GIVEN the two-element type. AX-1 is retired: its shape is
          Theorem T-SNAP, its occurrence the occurrence commitment.
-COST     the ZP-C forcing lemmas force only the >=2-outcome lower bound; what they leave is the
-         chart choice — the discrete chart steps at any nonzero dial, the reals never do
-         (`f_snap_impossible`). v6.0 PDFs keep the old wording until the v7.0 bump.
+COST     the ZP-C forcing lemmas force only the >=2-outcome lower bound; what they leave is the chart
+         choice and MP-1's minimality (exactly two outcomes) — the discrete chart steps at any nonzero
+         dial, the reals never do (`f_snap_impossible`). v6.0 PDFs keep the old wording until v7.0.
 READ     tools/process/repository-layout.md
 
 ## R-HANDOFF  "Update the handoff" is a compound action defined in the file itself.

@@ -499,8 +499,8 @@ theorem boolNInfL_bot_cover_unique (a : BoolNInfL) : (⊥ : BoolNInfL) ⋖ a ↔
 /-- `Statement:` ⊥ of `Bool × ℕ∞ᵒᵈ` has a first step, is the greatest lower bound and the limit of
 `nInfDualRun`, a strictly decreasing run of covers avoiding it, and no `(false, x)` covers it.
 `Reading:` CARRIER, both faces sit above ⊥ of `Bool × ℕ∞ᵒᵈ`, on two directions; at ε₀ of `Ordinal`
-the limit face is below and the cover above. Non-linearity makes both possible here, one way; on a
-linear order they exclude each other (the `example` below; compare `preconnected_iff_no_firstStep`). -/
+the limit face is below and the cover above. Both faces at one bottom force a non-linear order (one way);
+non-linearity alone does not supply them (the `example` below; compare `preconnected_iff_no_firstStep`). -/
 theorem boolNInfL_bot_cover_and_limit :
     (@BotHasFirstStep BoolNInfL (supBotZPS BoolNInfL)) ∧
     ((∀ n, nInfDualRun n ≠ ⊥) ∧ StrictAnti nInfDualRun ∧
@@ -516,6 +516,7 @@ theorem boolNInfL_bot_cover_and_limit :
 example {α : Type*} [LinearOrder α] [OrderBot α] {a : α} (ha : (⊥ : α) ⋖ a) (S : Set α)
     (hS : ∀ x ∈ S, x ≠ ⊥) : ¬ IsGLB S (⊥ : α) := fun h =>
   ha.lt.not_ge (h.2 fun x hx => not_lt.1 fun hx' => ha.2 (bot_lt_iff_ne_bot.2 (hS x hx)) hx')
+-- Mathlib, the same exclusion: `IsGLB.isPredPrelimit_of_notMem` (order) and `CovBy.nhdsGT` (order topology).
 
 /-- `Statement:` CONTROL, ⊥ of `ℕ∞ᵒᵈ` alone has no first step under `supBotZPS`. -/
 theorem nInfDual_not_botHasFirstStep : ¬ @BotHasFirstStep NInfDual (supBotZPS NInfDual) := by

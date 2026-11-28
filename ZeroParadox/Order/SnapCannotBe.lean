@@ -293,9 +293,9 @@ example : Nonempty (ZeroParadox.ZPSemilattice (Set ℝ)) ∧
 
 Reading: CARRIER. These lines BOUND the snap; none supplies it. ZP-F rules it out in every ordered
 field; ZP-B removes the topological obstruction in ℚ_p without replacing it. The first step is AX-B1,
-a modelling commitment. Its conditional form is a property a carrier has or lacks: `Bool` and `ℕ` have
+a precondition (chart choice). Its conditional form is a property a carrier has or lacks: `Bool` and `ℕ` have
 it, `ℝ` lacks it (the examples beside `HasFirstStep`, `ZeroParadox/Reals/OrderedField.lean`); the
-commitment is that the framework's carrier has it. AX-B1 holds at every state with anything above it:
+precondition is that the framework's carrier has it. AX-B1 holds at every state with anything above it:
 each has a first distinct state above it, with nothing strictly between. A state with nothing above it
 owes no step. -/
 #check @ZeroParadox.axb1_gives_unique_target          -- Statement: on a LINEAR order, AX-B1 at `bot` gives exactly one cover; the `Set Bool` control beside it in `ZeroParadox/Reals/OrderedField.lean` has two

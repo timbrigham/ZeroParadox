@@ -114,8 +114,10 @@ this file holds what was already in the corpus, the prior art, and the fences.
   (`∫ x, x ∂((geometricMeasure p).map Nat.cast) = (1 - p) / p` for every `p : unitInterval`), which gives 0
   at `p = 0` (`integral_id_map_cast_geometricMeasure_zero`, Mathlib's `geometricMeasure 0 = dirac 0`), and
   by danlyng/Econlib at commit d7bd947, `CountDist.geometric_expect`, for `0 < p ≤ 1`; both read at those
-  commits, types not elaborated. Our `lintegral_wait` gives ⊤ of `ℝ≥0∞` at `p = 0`, by the extended-real
-  convention `0⁻¹ = ⊤` in `ℝ≥0∞`: the never-firing law, where TauCeti gives 0 and Econlib excludes `p = 0`.
+  commits, types not elaborated. Our `lintegral_wait` gives ⊤ of `ℝ≥0∞` at `p = 0`, and that is the mean
+  itself: at `p = 0` almost every tape never fires (`never_fires_ae_zero`), so it is ⊥ of `ℕ → Bool`
+  (`tape_never_fires_iff`), whose wait is ⊤ of `ℕ∞` (`wait_bot`), and the wait is infinite almost surely. The convention `0⁻¹ = ⊤`
+  in `ℝ≥0∞` makes the closed form `p⁻¹ − 1` agree. TauCeti gives 0 there and Econlib excludes `p = 0`.
 - § VIII. `unpack_measurePreserving` reindexes an infinite product measure, from Mathlib's
   `Measure.infinitePi_map_piCongrLeft` and `Measure.infinitePi_map_curry`. A published measure-level pairing
   statement: Brattka, Gherardi, Hölzl, "Probabilistic computability and choice", *Information and

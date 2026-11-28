@@ -40,7 +40,7 @@ shows only that branching leaves the arity **free**. `Reading:` conjecture: a `p
 
 **What the un-captured freedom IS.** Not AX-B1: AX-B1 names discreteness only, a first step at the least
 element (`BotHasFirstStep`, the condition `stepOff_mass` branches on, `ZeroParadox/Information/Dial.lean` § IV).
-The arity is its own precondition, the binary-arity precondition: exactly two outcomes, finite branching. The completeness-critic hunt independently re-surfaces exactly this: arity is a
+The arity is its own precondition, MP-1: its minimality picks exactly two outcomes, so finite branching. The completeness-critic hunt independently re-surfaces exactly this: arity is a
 degree of freedom the branching axis does not force, so fixing it (to two) is a **precondition, not a theorem**,
 the same status AX-B1 has. The `IrreversibilityProbe` cardinality result complements this: two is the
 *value-pole* threshold (a unique fixed point already costs injectivity there - irreversibility, not
@@ -48,7 +48,7 @@ occurrence); binary *arity* is the separate branching choice.
 
 `Reading:` the completeness picture, a conjecture: no forced fifth *structural* axis, the four are mutually independent, and the one
 thing left open is the arity — recovered here as a precondition beside AX-B1 rather than a derived axis. This
-is evidence the four structural axes plus the binary-arity precondition beside AX-B1 are the whole story.
+is evidence the four structural axes plus MP-1 beside AX-B1 are the whole story.
 
 **§ V — Perfectness (no isolated points) is DERIVED, not a new axis.** A second Cantor-set property:
 *perfect* = every point is a limit of distinct points (no isolated point). `boundary_perfect`: in the tree
@@ -104,12 +104,12 @@ theorem arity_is_uncaptured :
       ¬ (((false, false, true) : Bool × Bool × Bool) ≤ (true, false, false))) :=
   ⟨binary_branch, ternary_branch⟩
 
-/-! ### § IV. Branching does not even force FINITE arity — so compactness is part of the arity precondition too. -/
+/-! ### § IV. Branching does not even force FINITE arity — so compactness is part of MP-1 too. -/
 
 /-- **Infinite branching.** In `Set ℕ`, the bottom `∅` has infinitely many pairwise-incomparable successors —
 the singletons `{i}` (`{i} ⊆ {j}` iff `i = j`). So the branching axis does not force *finite* arity, let
-alone binary. Hence "finite arity" — which is what makes the boundary *compact* — is itself part of the arity
-precondition, at a deeper level than binary-vs-ternary: the arity is structurally free all the way up. -/
+alone binary. `Reading:` (textbook, not stated in Lean here) finite arity is what makes the boundary *compact*,
+so it is part of MP-1, at a deeper level than binary-vs-ternary: the arity is structurally free all the way up. -/
 theorem infinite_branch :
     (∀ i : ℕ, (∅ : Set ℕ) ⊆ {i}) ∧ (∀ i j : ℕ, i ≠ j → ¬ ({i} ⊆ ({j} : Set ℕ))) := by
   refine ⟨fun i => Set.empty_subset _, fun i j hij hsub => ?_⟩
