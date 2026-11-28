@@ -950,6 +950,12 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- Statement: ⊥ of `Bool × ℕ∞ᵒᵈ` (product order) has a first step, the cover `(true, ⊥)`, and is the
 -- greatest lower bound and limit of a strictly decreasing run of covers avoiding it.
 #check @ZeroParadox.boolNInfL_bot_cover_and_limit
+-- Statement: `normN2 x = e2 (toDual (q2Val x))` for every `x : ℤ_[2]`, where `normN2` is the 2-adic norm onto
+-- its image `N2 ⊆ ℝ≥0` and `e2 : ℕ∞ᵒᵈ ≃o N2`; 0 of ℤ_[2] goes to ⊥ of `N2`, 0 of `ℝ≥0` (`normN2_zero`).
+#check @ZeroParadox.normN2_eq_e2_q2Val
+-- Statement: the same on the 2-adic norms: ⊥ of `Bool × N2`, `(false, 0)`, has a first step and is the greatest
+-- lower bound and limit of the strictly decreasing run of covers `n2Run`, second slot the norm of `2 ^ n`.
+#check @ZeroParadox.boolN2_bot_cover_and_limit
 -- Statement: if ⊥ of `L` has a first step and the stage chances `q n` sum to ∞, then for
 -- `fadingTrials q hq`-almost every tape some `φ` makes the run `φ ∘ firedRun w hw` step off ⊥ of `L`
 -- to a cover. One way.

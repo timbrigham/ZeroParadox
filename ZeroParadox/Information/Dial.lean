@@ -26,7 +26,7 @@ analog and a digital value
 
 ## Formal Overview (AI-assisted)
 Switch (§ II): "some stage fires" has mass 0 at `p = 0`, 1 for `0 < p ≤ 1`. Volume (§ III): "fires within `n`
-stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`, the step-off mass, `Bool × ℕ∞ᵒᵈ`; § V-VI: schedules,
+stages" is continuous in `p` and tends to the switch non-uniformly. § IV: the jump in `L`, the step-off mass, `Bool × ℕ∞ᵒᵈ` and its 2-adic norm form `Bool × N2`; § V-VI: schedules,
 the law; § VII: mean of `wait + 1` is `p⁻¹`; § VIII: columns; § IX: entropy pins `0 < p < 1`; § X: translations;
 § XI: a supplied Markov kernel on the die; § XII: lumping, and reversibility under coarse-graining. -/
 
@@ -564,6 +564,197 @@ example : IsMin (⊥ : BoolNInfL) ∧ ¬ Order.IsSuccLimit (⊥ : BoolNInfL) :=
   ⟨isMin_bot, fun h => h.not_isMin isMin_bot⟩
 
 end BoolNInf
+
+/-! #### § IV, the same carrier on the 2-adic norms: `Bool × N2` -/
+
+section BoolN2
+
+open OrderDual
+
+/-- `Statement:` the norm image of ℤ_[2] in `ℝ≥0` (`q2_nnnorm_mem`, `normN2_surjective`). -/
+def N2 : Set NNReal := {r | r = 0 ∨ ∃ n : ℕ, r = 2⁻¹ ^ n}
+
+/-- `Statement:` ⊥ of `N2` is 0 of `ℝ≥0`. -/
+instance n2OrderBot : OrderBot N2 where
+  bot := ⟨0, Or.inl rfl⟩
+  bot_le x := show (0 : NNReal) ≤ x.1 from zero_le
+
+/-- `Statement:` the map `ℕ∞ → ℝ≥0` sending ⊤ of `ℕ∞` to 0 of `ℝ≥0` and `n` to `2⁻¹ ^ n`. -/
+noncomputable def n2Pow (e : ℕ∞) : NNReal := if e = ⊤ then 0 else (2⁻¹ : NNReal) ^ e.toNat
+
+/-- `Statement:` `n2Pow` sends ⊤ of `ℕ∞` to 0 of `ℝ≥0`. -/
+theorem n2Pow_top : n2Pow ⊤ = 0 := by simp [n2Pow]
+
+/-- `Statement:` `n2Pow n = 2⁻¹ ^ n` for `n : ℕ`. -/
+theorem n2Pow_coe (n : ℕ) : n2Pow (n : ℕ∞) = (2⁻¹ : NNReal) ^ n := by simp [n2Pow]
+
+/-- `Statement:` every value of `n2Pow` lies in `N2`. -/
+theorem n2Pow_mem (e : ℕ∞) : n2Pow e ∈ N2 := by
+  induction e using ENat.recTopCoe with
+  | top => exact Or.inl n2Pow_top
+  | coe n => exact Or.inr ⟨n, n2Pow_coe n⟩
+
+/-- `Statement:` `n2Pow` is strictly antitone on `ℕ∞`. -/
+theorem n2Pow_strictAnti : StrictAnti n2Pow := by
+  intro a b hab
+  induction b using ENat.recTopCoe with
+  | top =>
+    induction a using ENat.recTopCoe with
+    | top => exact absurd hab (lt_irrefl _)
+    | coe m => rw [n2Pow_top, n2Pow_coe]; exact pow_pos (by norm_num) m
+  | coe n =>
+    induction a using ENat.recTopCoe with
+    | top => exact absurd hab (not_lt.2 le_top)
+    | coe m =>
+      rw [n2Pow_coe, n2Pow_coe]
+      exact pow_lt_pow_right_of_lt_one₀ (by norm_num) (by norm_num) (by exact_mod_cast hab)
+
+/-- `Statement:` `ℕ∞ᵒᵈ ≃o N2`, sending `toDual n` to `2⁻¹ ^ n` and `toDual ⊤` (⊤ of `ℕ∞`) to 0 of
+`ℝ≥0` (`e2_toDual_coe`, `e2_toDual_top`). Mathlib sibling with the same target `ℕ∞ᵒᵈ`:
+`IsDiscreteValuationRing.idealOrderIsoENat` (the ideal side, ideal `(2 ^ n)` for norm `2⁻¹ ^ n`);
+the value-group form: `Valuation.IsRankOneDiscrete.valueGroup₀_equiv_withZeroMulInt`. The valuation
+side, values in `ℕ ∪ {∞}` with `v(0) = ∞` and the nonzero ideals the chain `(p ^ m)`: A. V. Sutherland,
+MIT 18.782 Lecture 4 (Fall 2013), Def. 4.10 and Thm. 4.16, pp. 3-4; Stacks Project tags 00IE, 00IH. -/
+noncomputable def e2 : NInfDual ≃o N2 :=
+  StrictMono.orderIsoOfSurjective (fun x => ⟨n2Pow (ofDual x), n2Pow_mem _⟩)
+    (fun _ _ h => n2Pow_strictAnti h) (by
+      rintro ⟨r, hr | ⟨n, rfl⟩⟩
+      · exact ⟨toDual ⊤, Subtype.ext (by simp [n2Pow_top, hr])⟩
+      · exact ⟨toDual (n : ℕ∞), Subtype.ext (by simp [n2Pow_coe])⟩)
+
+/-- `Statement:` `e2` sends `toDual ⊤` (⊤ of `ℕ∞`) to ⊥ of `N2`, 0 of `ℝ≥0`. -/
+theorem e2_toDual_top : e2 (toDual (⊤ : ℕ∞)) = ⊥ :=
+  Subtype.ext (show n2Pow ⊤ = 0 from n2Pow_top)
+
+/-- `Statement:` `e2` sends `toDual n` to `2⁻¹ ^ n`. -/
+theorem e2_toDual_coe (n : ℕ) :
+    e2 (toDual (n : ℕ∞)) = ⟨(2⁻¹ : NNReal) ^ n, Or.inr ⟨n, rfl⟩⟩ :=
+  Subtype.ext (show n2Pow (n : ℕ∞) = _ from n2Pow_coe n)
+
+/-- `Statement:` the norm of a nonzero `x : ℤ_[2]` is `2⁻¹ ^ x.valuation`; from Mathlib
+`PadicInt.norm_eq_zpow_neg_valuation`. -/
+theorem q2_nnnorm_eq_inv_pow (x : ℤ_[2]) (hx : x ≠ 0) :
+    ‖x‖₊ = (2⁻¹ : NNReal) ^ x.valuation := by
+  apply NNReal.eq
+  rw [coe_nnnorm, PadicInt.norm_eq_zpow_neg_valuation hx]
+  push_cast
+  rw [zpow_neg, zpow_natCast, inv_pow]
+
+/-- `Statement:` the norm of every `x : ℤ_[2]`, 0 of ℤ_[2] included, lies in `N2`. -/
+theorem q2_nnnorm_mem (x : ℤ_[2]) : ‖x‖₊ ∈ N2 := by
+  by_cases hx : x = 0
+  · exact Or.inl (by simp [hx])
+  · exact Or.inr ⟨_, q2_nnnorm_eq_inv_pow x hx⟩
+
+/-- `Statement:` the 2-adic norm on ℤ_[2], corestricted to `N2`. -/
+noncomputable def normN2 (x : ℤ_[2]) : N2 := ⟨‖x‖₊, q2_nnnorm_mem x⟩
+
+/-- `Statement:` `normN2 x = e2 (toDual (q2Val x))` for every `x : ℤ_[2]`, 0 of ℤ_[2] included. Its
+order content, read on ℤ_[2], is `q2Val_le_iff_norm_le` (`ZeroParadox/Valuation/Scale.lean`). -/
+theorem normN2_eq_e2_q2Val (x : ℤ_[2]) : normN2 x = e2 (toDual (q2Val x)) := by
+  by_cases hx : x = 0
+  · subst hx; rw [q2Val_bot, e2_toDual_top]; exact Subtype.ext (by simp [normN2]; rfl)
+  · have hv : q2Val x = (x.valuation : ℕ∞) := by simp [q2Val, hx]
+    rw [hv, e2_toDual_coe]; exact Subtype.ext (q2_nnnorm_eq_inv_pow x hx)
+
+/-- `Statement:` `normN2` sends 0 of ℤ_[2] to ⊥ of `N2`. -/
+theorem normN2_zero : normN2 0 = ⊥ := by rw [normN2_eq_e2_q2Val, q2Val_bot, e2_toDual_top]
+
+/-- `Statement:` the run `n ↦ (false, 2⁻¹ ^ n)` in `Bool × N2`. -/
+noncomputable def n2Run (n : ℕ) : Bool × N2 := (false, ⟨(2⁻¹ : NNReal) ^ n, Or.inr ⟨n, rfl⟩⟩)
+
+/-- `Statement:` `n2Run n = (false, normN2 (2 ^ n))`: the second slot is the norm of `2 ^ n` in
+ℤ_[2]; from Mathlib `PadicInt.norm_p_pow`. -/
+theorem n2Run_eq_norm (n : ℕ) : n2Run n = (false, normN2 ((2 : ℤ_[2]) ^ n)) := by
+  have h : ‖(2 : ℤ_[2]) ^ n‖₊ = (2⁻¹ : NNReal) ^ n := by
+    apply NNReal.eq
+    have := PadicInt.norm_p_pow (p := 2) n
+    push_cast at this ⊢
+    rw [this, zpow_neg, zpow_natCast, inv_pow]
+  simp only [n2Run, normN2]
+  congr 2
+  exact h.symm
+
+/-- `Statement:` `normN2` is onto `N2`. -/
+theorem normN2_surjective : Function.Surjective normN2 := by
+  rintro ⟨r, hr | ⟨n, rfl⟩⟩
+  · exact ⟨0, by subst hr; rw [normN2_zero]; rfl⟩
+  · exact ⟨(2 : ℤ_[2]) ^ n, (congrArg Prod.snd (n2Run_eq_norm n)).symm⟩
+
+/-- `Statement:` `Bool × ℕ∞ᵒᵈ ≃o Bool × N2`, the identity on `Bool` and `e2` on the second slot. -/
+noncomputable def boolN2Iso : BoolNInfL ≃o Bool × N2 where
+  toEquiv := Equiv.prodCongr (Equiv.refl Bool) e2.toEquiv
+  map_rel_iff' := by
+    rintro ⟨a1, a2⟩ ⟨b1, b2⟩
+    show ((a1, e2 a2) : Bool × N2) ≤ (b1, e2 b2) ↔ (a1, a2) ≤ (b1, b2)
+    rw [Prod.mk_le_mk, Prod.mk_le_mk, e2.le_iff_le]
+
+/-- `Statement:` `boolNInfL_bot_cover_and_limit` carried along `boolN2Iso`: ⊥ of `Bool × N2`,
+`(false, 0)`, has a first step, is the greatest lower bound and the limit of the strictly decreasing
+run of covers `n2Run`, and no `(false, x)` covers it. The limit is in the product of the discrete
+topology on `Bool` and the subspace topology of `N2` in `ℝ≥0`; the second slot of `n2Run n` is the
+norm of `2 ^ n` in ℤ_[2] (`n2Run_eq_norm`). -/
+theorem boolN2_bot_cover_and_limit :
+    (@BotHasFirstStep (Bool × N2) (supBotZPS (Bool × N2))) ∧
+    ((∀ n, n2Run n ≠ ⊥) ∧ StrictAnti n2Run ∧ (∀ n, n2Run (n + 1) ⋖ n2Run n) ∧
+      IsGLB (Set.range n2Run) (⊥ : Bool × N2) ∧ Tendsto n2Run atTop (𝓝 (⊥ : Bool × N2))) ∧
+    (∀ x : N2, ¬ (⊥ : Bool × N2) ⋖ (false, x)) := by
+  obtain ⟨-, ⟨hne, hanti, hcov, hglb, -⟩, hno⟩ := boolNInfL_bot_cover_and_limit
+  have hT : boolN2Iso (true, ⊥) = (true, ⊥) := by
+    show ((true, e2 ⊥) : Bool × N2) = (true, ⊥); rw [e2.map_bot]
+  have hrun : n2Run = boolN2Iso ∘ nInfDualRun := funext fun n => by
+    show n2Run n = (false, e2 (toDual (n : ℕ∞))); rw [e2_toDual_coe]; rfl
+  have hcov0 : (⊥ : Bool × N2) ⋖ (true, ⊥) := by
+    have h := (apply_covBy_apply_iff boolN2Iso).2 boolNInfL_bot_covBy_true
+    rwa [boolN2Iso.map_bot, hT] at h
+  refine ⟨supBotZPS_botHasFirstStep_iff.2 ⟨_, hcov0⟩,
+    ⟨fun n h => ?_, ?_, fun n => ?_, ?_, ?_⟩, fun x h => ?_⟩
+  · rw [hrun, Function.comp_apply, ← boolN2Iso.map_bot] at h
+    exact hne n (boolN2Iso.injective h)
+  · rw [hrun]; exact boolN2Iso.strictMono.comp_strictAnti hanti
+  · simp only [hrun, Function.comp_apply]; exact (apply_covBy_apply_iff boolN2Iso).2 (hcov n)
+  · rw [hrun, Set.range_comp, ← boolN2Iso.map_bot]; exact boolN2Iso.isGLB_image'.2 hglb
+  · have h2 : Tendsto (fun n : ℕ => (⟨(2⁻¹ : NNReal) ^ n, Or.inr ⟨n, rfl⟩⟩ : N2)) atTop
+        (𝓝 (⊥ : N2)) := by
+      rw [tendsto_subtype_rng]
+      exact tendsto_pow_atTop_nhds_zero_of_lt_one zero_le (by norm_num)
+    exact tendsto_const_nhds.prodMk_nhds h2
+  · obtain ⟨y, rfl⟩ := e2.surjective x
+    have hF : boolN2Iso (false, y) = (false, e2 y) := rfl
+    rw [← hF, ← boolN2Iso.map_bot, apply_covBy_apply_iff] at h
+    exact hno y h
+
+/-- `Statement:` on `Bool × N2` the mass of `stepOff` is the switch: 1 for `p ≠ 0`, 0 at `p = 0`. -/
+theorem boolN2_stepOff_mass (p : NNReal) (hp : p ≤ 1) :
+    trials p hp (@stepOff (Bool × N2) (supBotZPS (Bool × N2))) = if p ≠ 0 then 1 else 0 := by
+  rw [@stepOff_mass (Bool × N2) (supBotZPS (Bool × N2))]
+  simp [boolN2_bot_cover_and_limit.1]
+
+-- Statement: CONTROL, ⊥ of `N2` alone has no first step, and the mass of `stepOff` is 0 at every `p`.
+example (p : NNReal) (hp : p ≤ 1) : ¬ @BotHasFirstStep N2 (supBotZPS N2) ∧
+    trials p hp (@stepOff N2 (supBotZPS N2)) = 0 := by
+  have h : ¬ @BotHasFirstStep N2 (supBotZPS N2) := by
+    rw [supBotZPS_botHasFirstStep_iff]
+    rintro ⟨a, ha⟩
+    apply nInfDual_not_botHasFirstStep
+    rw [supBotZPS_botHasFirstStep_iff]
+    refine ⟨e2.symm a, (apply_covBy_apply_iff e2).1 ?_⟩
+    rw [e2.map_bot, e2.apply_symm_apply]; exact ha
+  refine ⟨h, ?_⟩
+  rw [@stepOff_of_not_firstStep N2 (supBotZPS N2) h]; simp
+
+-- Statement: CONTROL, ⊥ of `N2` alone is still the greatest lower bound and the limit of `2⁻¹ ^ n`.
+example : IsGLB (Set.range fun n : ℕ => (⟨(2⁻¹ : NNReal) ^ n, Or.inr ⟨n, rfl⟩⟩ : N2)) (⊥ : N2) ∧
+    Tendsto (fun n : ℕ => (⟨(2⁻¹ : NNReal) ^ n, Or.inr ⟨n, rfl⟩⟩ : N2)) atTop (𝓝 (⊥ : N2)) := by
+  refine ⟨?_, ?_⟩
+  · have hr : (Set.range fun n : ℕ => (⟨(2⁻¹ : NNReal) ^ n, Or.inr ⟨n, rfl⟩⟩ : N2)) =
+        e2 '' Set.range fun n : ℕ => toDual (n : ℕ∞) := by
+      rw [← Set.range_comp]; congr 1
+    rw [hr, ← e2.map_bot]; exact e2.isGLB_image'.2 nInfDual_bot_isGLB
+  · rw [tendsto_subtype_rng]
+    exact tendsto_pow_atTop_nhds_zero_of_lt_one zero_le (by norm_num)
+
+end BoolN2
 
 end StepOff
 
@@ -2974,6 +3165,27 @@ open ZeroParadox
 #print axioms nInfDual_stepOff_mass
 #print axioms nInfDual_bot_isGLB
 #print axioms bool_bot_not_isGLB
+#print axioms N2
+#print axioms n2OrderBot
+#print axioms n2Pow
+#print axioms n2Pow_top
+#print axioms n2Pow_coe
+#print axioms n2Pow_mem
+#print axioms n2Pow_strictAnti
+#print axioms e2
+#print axioms e2_toDual_top
+#print axioms e2_toDual_coe
+#print axioms q2_nnnorm_eq_inv_pow
+#print axioms q2_nnnorm_mem
+#print axioms normN2
+#print axioms normN2_eq_e2_q2Val
+#print axioms normN2_zero
+#print axioms n2Run
+#print axioms n2Run_eq_norm
+#print axioms normN2_surjective
+#print axioms boolN2Iso
+#print axioms boolN2_bot_cover_and_limit
+#print axioms boolN2_stepOff_mass
 #print axioms fadingTrials_fires_iIndepSet
 #print axioms schedule_fires_of_tsum_top
 #print axioms schedule_snap_ae

@@ -302,6 +302,23 @@ this file holds what was already in the corpus, the prior art, and the fences.
 - The erasing half of `coarse_graining_trade` from the lift side: Wolfer and Watanabe, § 4.4.3, p. 26
   (under § XII above).
 
+## Prior art for § IV, the 2-adic norm form (searched 2026-11-27)
+
+- The norm image of ℤ_[2] as a set, `N2` (`q2_nnnorm_mem`, `normN2_surjective`): not located as a single
+  Mathlib lemma as of 2026-11-27, searched as follows: grep of `Mathlib/NumberTheory/Padics`, `exact?` on
+  three phrasings, LeanExplore on two. It follows from `PadicInt.norm_eq_zpow_neg_valuation` and
+  `norm_zero`; `n2Run_eq_norm` uses `PadicInt.norm_p_pow`.
+- `e2 : ℕ∞ᵒᵈ ≃o N2` has a Mathlib sibling with the same target, `IsDiscreteValuationRing.idealOrderIsoENat`
+  (ideals of a discrete valuation ring; ideal `(2 ^ n)` for norm `2⁻¹ ^ n`), and a value-group form,
+  `Valuation.IsRankOneDiscrete.valueGroup₀_equiv_withZeroMulInt`. Its order content on ℤ_[2] is
+  `q2Val_le_iff_norm_le` (`ZeroParadox/Valuation/Scale.lean`).
+- Sutherland, MIT 18.782 Lecture 4 (Fall 2013), Def. 4.10, p. 3 (`v_p(0) = ∞`) and Thm. 4.16, p. 4 (every
+  nonzero ideal of ℤ_p is `(p^m)`); Stacks Project tags 00IE (discrete valuation ring) and 00IH (ideals of a
+  valuation ring correspond to ideals of its value group). These give the valuation and ideal side; no
+  retrieved text states the norm image itself.
+- `boolN2_bot_cover_and_limit` takes its order conjuncts from `boolNInfL_bot_cover_and_limit` along
+  `boolN2Iso`; its limit conjunct is proved directly, in the subspace topology of `N2` in `ℝ≥0`.
+
 ## Fences
 
 - "The bottom is the set of all tapes" is the tape-chart `Reading:` (ruling 94). Nothing identifies ⊥ of a
